@@ -1,12 +1,12 @@
-﻿using VoteM.Models.Organizations.Serializable;
+﻿using VotePlatform.Models.Organizations.Serializable;
 
-namespace VoteM.Models.Organizations
+namespace VotePlatform.Models.Organizations
 {
     public class OrganizationAttributes
     {
         public bool IsValidationPassed { get; set; }
         public OrganizationTypeOfJoin TypeOfJoin { get; set; }
-        public OrganizationAttributes(OrganizationTypeOfJoin type= OrganizationTypeOfJoin.Controlled)
+        public OrganizationAttributes(OrganizationTypeOfJoin type = OrganizationTypeOfJoin.Controlled)
         {
             IsValidationPassed = false;
             TypeOfJoin = type;

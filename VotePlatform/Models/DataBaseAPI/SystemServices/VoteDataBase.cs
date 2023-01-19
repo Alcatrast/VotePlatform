@@ -1,12 +1,12 @@
 ﻿
+using System;
+using System.Collections.Generic;
 using Microsoft.Data.SqlClient;
-using Microsoft.Identity.Client;
-using VoteM.Models.Organizations;
-using VoteM.Models.Organizations.DB;
-using VoteM.Models.Votes;
-using VoteM.Models.Votes.DB;
 
-namespace VoteM.Models.DataBaseAPI.SystemServices
+using VotePlatform.Models.Votes;
+using VotePlatform.Models.Votes.DB;
+
+namespace VotePlatform.Models.DataBaseAPI.SystemServices
 {
     /*
    CREATE TABLE[dbo].[Votes]
@@ -24,10 +24,10 @@ namespace VoteM.Models.DataBaseAPI.SystemServices
         public List<VoteInDB> GetById(string organizationId) { return Get($"OrganizationId=N'{organizationId}'"); }
         private List<VoteInDB> Get(string selectFilter)
         {
-            List<VoteInDB> res = new();
-            SqlConnection connection = new(ConnectionString);
+            List<VoteInDB> res = new List<VoteInDB>();
+            SqlConnection connection = new SqlConnection(ConnectionString);
             connection.Open();
-            SqlCommand command = new($@"SELECT * FROM Votes WHERE {selectFilter}", connection);
+            SqlCommand command = new SqlCommand($@"SELECT * FROM Votes WHERE {selectFilter}", connection);
             SqlDataReader dataReader = command.ExecuteReader();
             try
             {
@@ -36,7 +36,7 @@ namespace VoteM.Models.DataBaseAPI.SystemServices
                     var organizationId = Convert.ToString(dataReader["OrganizationId"]);
                     var index = Convert.ToString(dataReader["IndexIn"]);
                     var serializedVote = Convert.ToString(dataReader["SerializedVote"]);
-                    res.Add(new()
+                    res.Add(new VoteInDB()
                     {
                         OrganizationId = organizationId ?? string.Empty,
                         IndexIn = index ?? string.Empty,
@@ -53,18 +53,18 @@ namespace VoteM.Models.DataBaseAPI.SystemServices
         }
         public bool Add(VoteInDB voteInDB)
         {
-            SqlConnection connection = new(ConnectionString);
+            SqlConnection connection = new SqlConnection(ConnectionString);
             connection.Open();
-            SqlCommand command = new(@$"INSERT INTO [Votes] (OrganizationId, IndexIn, SerializedVote) VALUES (N'{voteInDB.OrganizationId}', N'{voteInDB.IndexIn}', N'{voteInDB.SerializedVote}')", connection);
+            SqlCommand command = new SqlCommand(@$"INSERT INTO [Votes] (OrganizationId, IndexIn, SerializedVote) VALUES (N'{voteInDB.OrganizationId}', N'{voteInDB.IndexIn}', N'{voteInDB.SerializedVote}')", connection);
             command.ExecuteNonQuery();
             connection.Close();
             return true;
         }
         public bool Update(VoteInDB voteInDB)
         {
-            SqlConnection connection = new(ConnectionString);
+            SqlConnection connection = new SqlConnection(ConnectionString);
             connection.Open();
-            SqlCommand command = new(@$"UPDATE Votes SET OrganizationId=N'{voteInDB.OrganizationId}', IndexIn=N'{voteInDB.IndexIn}', SerializedVote=N'{voteInDB.SerializedVote}'  WHERE OrganizationId=N'{voteInDB.OrganizationId}' AND IndexIn=N'{voteInDB.IndexIn}'", connection);
+            SqlCommand command = new SqlCommand(@$"UPDATE Votes SET OrganizationId=N'{voteInDB.OrganizationId}', IndexIn=N'{voteInDB.IndexIn}', SerializedVote=N'{voteInDB.SerializedVote}'  WHERE OrganizationId=N'{voteInDB.OrganizationId}' AND IndexIn=N'{voteInDB.IndexIn}'", connection);
             command.ExecuteNonQuery();
             connection.Close();
             return true;

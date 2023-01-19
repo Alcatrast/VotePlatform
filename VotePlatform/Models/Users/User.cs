@@ -1,11 +1,9 @@
-﻿using System.Collections.Generic;
-
-using VoteM.Models.SystemServices;
-using VoteM.Models.Users.Serializable;
-using VoteM.Models.DataBaseAPI;
+﻿using VotePlatform.Models.SystemServices;
+using VotePlatform.Models.Users.Serializable;
+using VotePlatform.Models.DataBaseAPI;
 
 
-namespace VoteM.Models.Users
+namespace VotePlatform.Models.Users
 {
     public class User : IUser
     {
@@ -33,9 +31,9 @@ namespace VoteM.Models.Users
         {
             if (Role == newRole) { return false; }
 
-            UsersDataBaseAPI.FindById(givingUserId,out User user);
+            UsersDataBaseAPI.FindById(givingUserId, out User user);
             var sgr = (sbyte)user.Role;
-            
+
             if (sgr < (sbyte)RoleInPlatform.Validator) { return false; }
             Role = sgr > (sbyte)newRole ? newRole : (RoleInPlatform)(sgr - 1);
             return true;
@@ -47,8 +45,8 @@ namespace VoteM.Models.Users
             Email = sUser.Email;
             Password = sUser.Password;
             Role = sUser.Role;
-            Meta = new(sUser.Meta);
-            Membersip = new(sUser.Membersip);
+            Meta = new Meta(sUser.Meta);
+            Membersip = new MembersipImGroups(sUser.Membersip);
         }
     }
 }

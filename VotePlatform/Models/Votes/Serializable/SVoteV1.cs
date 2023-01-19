@@ -1,16 +1,16 @@
-﻿
+﻿using System;
 using System.Collections.Generic;
 
-using VoteM.Models.SystemServices;
+using VotePlatform.Models.SystemServices;
 
-namespace VoteM.Models.Votes.Serializable
+namespace VotePlatform.Models.Votes.Serializable
 {
     [Serializable]
     public class SVoiceV1
     {
         public string UserId = string.Empty;
-        public List<int> AnswerIndexes = new();
-        public DateTime VoteTime = new();
+        public List<int> AnswerIndexes = new List<int>();
+        public DateTime VoteTime = new DateTime();
         public SVoiceV1(Voice voice)
         {
             UserId = voice.UserId;
@@ -64,7 +64,7 @@ namespace VoteM.Models.Votes.Serializable
     public class SVoteAttributesV1
     {
         public RoleInOrganization MinRoleToVoting { get; }
-        public TimeSpan TimeActiveToVote = new();
+        public TimeSpan TimeActiveToVote = new TimeSpan();
         public bool IsAlwaysActiveToVote = false;
         public bool IsAnonimousVote = false;
         public bool IsVoiceCancellationPossible = false;
@@ -84,32 +84,31 @@ namespace VoteM.Models.Votes.Serializable
     public class SVoteV1
     {
         public bool IsAvailable = false;
-        public DateTime CreatingDateTime = new();
-        public SVoteIdV1 Id = new();
+        public DateTime CreatingDateTime = new DateTime();
+        public SVoteIdV1 Id = new SVoteIdV1();
         public VoteType Type = VoteType.AloneAswer;
-        public SVoteAttributesV1 Attibutes = new();
-        public SVoteResultAttributesV1 ResultAttributes = new();
-        public SVoteMetaV1 Meta = new();
-        public List<SVoteMetaV1> AnswersMetas = new();
+        public SVoteAttributesV1 Attibutes = new SVoteAttributesV1();
+        public SVoteResultAttributesV1 ResultAttributes = new SVoteResultAttributesV1();
+        public SVoteMetaV1 Meta = new SVoteMetaV1();
+        public List<SVoteMetaV1> AnswersMetas = new List<SVoteMetaV1>();
         public int CountVoters = 0;
-        public List<SVoiceV1> Voices = new();
+        public List<SVoiceV1> Voices = new List<SVoiceV1>();
         public SVoteV1(Vote vote)
         {
             CreatingDateTime = vote.CreatingDateTime;
-            Id = new(vote.Id);
+            Id = new SVoteIdV1(vote.Id);
             Type = vote.Type;
-            Attibutes = new(vote.Attibutes);
-            ResultAttributes = new(vote.ResultAttributes);
-            Meta = new(vote.Meta);
+            Attibutes = new SVoteAttributesV1(vote.Attibutes);
+            ResultAttributes = new SVoteResultAttributesV1(vote.ResultAttributes);
+            Meta = new SVoteMetaV1(vote.Meta);
             CountVoters = vote.CountVoters;
             IsAvailable = vote.IsAvailable;
 
-            AnswersMetas = new();
-            foreach (var it in vote.AnswersMetas) { AnswersMetas.Add(new(it)); }
-            Voices = new();
-            foreach (var it in vote.Voices) { Voices.Add(new(it)); }
+            AnswersMetas = new List<SVoteMetaV1>();
+            foreach (var it in vote.AnswersMetas) { AnswersMetas.Add(new SVoteMetaV1(it)); }
+            Voices = new List<SVoiceV1>();
+            foreach (var it in vote.Voices) { Voices.Add(new SVoiceV1(it)); }
         }
         public SVoteV1() { }
     }
-
 }

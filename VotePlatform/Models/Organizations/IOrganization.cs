@@ -1,7 +1,6 @@
-﻿
-using VoteM.Models.SystemServices;
+﻿using VotePlatform.Models.SystemServices;
 
-namespace VoteM.Models.Organizations
+namespace VotePlatform.Models.Organizations
 {
     interface IOrganization
     {

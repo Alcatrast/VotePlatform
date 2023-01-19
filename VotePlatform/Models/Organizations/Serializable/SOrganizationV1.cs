@@ -1,7 +1,9 @@
-﻿
-using VoteM.Models.SystemServices.Serializable;
+﻿using System;
+using System.Collections.Generic;
 
-namespace VoteM.Models.Organizations.Serializable
+using VotePlatform.Models.SystemServices.Serializable;
+
+namespace VotePlatform.Models.Organizations.Serializable
 {
     [Serializable]
     public class SOrganizationAttributesV1
@@ -19,9 +21,9 @@ namespace VoteM.Models.Organizations.Serializable
     public class SOrganizationMembersV1
     {
         public string Owner = string.Empty;
-        public List<string> Admins = new();
-        public List<string> Audience = new();
-        public List<string> Queue = new();
+        public List<string> Admins = new List<string>();
+        public List<string> Audience = new List<string>();
+        public List<string> Queue = new List<string>();
         public SOrganizationMembersV1(OrganizationMembers groupMembers)
         {
             Owner = groupMembers.Owner;
@@ -36,19 +38,19 @@ namespace VoteM.Models.Organizations.Serializable
         public bool IsDeleted = true;
         public string Id = string.Empty;
         public string Nickname = string.Empty;
-        public SOrganizationAttributesV1 Attributes = new();
-        public SMetaV1 Meta = new();
-        public SOrganizationMembersV1 Members = new();
-        public List<string> VoteIds = new();
+        public SOrganizationAttributesV1 Attributes = new SOrganizationAttributesV1();
+        public SMetaV1 Meta = new SMetaV1();
+        public SOrganizationMembersV1 Members = new SOrganizationMembersV1();
+        public List<string> VoteIds = new List<string>();
 
         public SOrganizationV1(Organization group)
         {
             IsDeleted = group.IsDeleted;
             Id = group.Id;
             Nickname = group.Nickname;
-            Attributes = new(group.Attributes);
-            Meta = new(group.Meta);
-            Members = new(group.Members);
+            Attributes = new SOrganizationAttributesV1(group.Attributes);
+            Meta = new SMetaV1(group.Meta);
+            Members = new SOrganizationMembersV1(group.Members);
             VoteIds = group.VoteIds;
         }
         public SOrganizationV1() { }

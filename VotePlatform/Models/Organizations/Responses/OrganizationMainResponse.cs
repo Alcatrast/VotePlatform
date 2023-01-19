@@ -1,10 +1,10 @@
 ﻿using System.Collections.Generic;
 
-using VoteM.Models.Votes;
-using VoteM.Models.SystemServices;
-using VoteM.Models.DataBaseAPI;
+using VotePlatform.Models.SystemServices;
+using VotePlatform.Models.Votes;
+using VotePlatform.Models.DataBaseAPI;
 
-namespace VoteM.Models.Organizations
+namespace VotePlatform.Models.Organizations
 {
     public class OrganizationMainResponse
     {
@@ -32,7 +32,7 @@ namespace VoteM.Models.Organizations
         }
         private static List<VoteMainResponse> GetVotes(Organization group, string userId)
         {
-            List<VoteMainResponse> res = new(), pvs = new(), upvs = new();
+            List<VoteMainResponse> res = new List<VoteMainResponse>(), pvs = new List<VoteMainResponse>(), upvs = new List<VoteMainResponse>();
 
             var votes = VotesDataBaseAPI.FindAllBelongingTo(group, group.GetRoleInOrganization(userId), group.GetRoleInPlatform(userId));
 

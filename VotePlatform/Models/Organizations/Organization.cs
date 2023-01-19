@@ -1,11 +1,11 @@
 ﻿using System.Collections.Generic;
 
-using VoteM.Models.Users;
-using VoteM.Models.SystemServices;
-using VoteM.Models.Organizations.Serializable;
-using VoteM.Models.DataBaseAPI;
+using VotePlatform.Models.SystemServices;
+using VotePlatform.Models.Users;
+using VotePlatform.Models.Organizations.Serializable;
+using VotePlatform.Models.DataBaseAPI;
 
-namespace VoteM.Models.Organizations
+namespace VotePlatform.Models.Organizations
 {
     public class Organization : IOrganization
     {
@@ -111,7 +111,7 @@ namespace VoteM.Models.Organizations
             else if (Attributes.TypeOfJoin == OrganizationTypeOfJoin.Uncontrolled)
             {
                 Members.Audience.Add(toAddUserId);
-              
+
                 UsersDataBaseAPI.FindById(toAddUserId, out User user);
                 user.Membersip.AudienceInGtoups.Add(Id);
                 UsersDataBaseAPI.Update(user);
@@ -122,12 +122,12 @@ namespace VoteM.Models.Organizations
 
         public bool CancelApplicationForMembersip(string toCancelUserId)
         {
-            if((sbyte)GetRoleInPlatform(toCancelUserId)>= (sbyte)RoleInPlatform.User)
-            if (Members.Queue.Contains(toCancelUserId))
-            {
-                Members.Queue.Remove(toCancelUserId);
-                return true;
-            }
+            if ((sbyte)GetRoleInPlatform(toCancelUserId) >= (sbyte)RoleInPlatform.User)
+                if (Members.Queue.Contains(toCancelUserId))
+                {
+                    Members.Queue.Remove(toCancelUserId);
+                    return true;
+                }
             return false;
         }
         public bool RejectApplicationForMembersip(string adminId, string toRejectUserId)
@@ -142,7 +142,8 @@ namespace VoteM.Models.Organizations
             if ((sbyte)GetRoleInOrganization(adminId) >= (sbyte)RoleInOrganization.Admin == false) { return false; }
             if (Members.AllMembers.Contains(toAcceptUserId)) { return false; }
 
-            if (Members.Queue.Remove(toAcceptUserId)) { 
+            if (Members.Queue.Remove(toAcceptUserId))
+            {
                 Members.Audience.Add(toAcceptUserId);
 
                 UsersDataBaseAPI.FindById(toAcceptUserId, out User user);
@@ -169,7 +170,7 @@ namespace VoteM.Models.Organizations
         {
             if ((sbyte)GetRoleInOrganization(ownerId) >= (sbyte)RoleInOrganization.Owner == false) { return false; }
             if (Members.Admins.Contains(toAddUserId) == false) { Members.Admins.Add(toAddUserId); Members.Audience.Remove(toAddUserId); Members.Queue.Remove(toAddUserId); }
-            
+
             UsersDataBaseAPI.FindById(toAddUserId, out User user);
             user.Membersip.AdminInGroups.Add(Id);
             user.Membersip.AudienceInGtoups.Remove(Id);
@@ -179,7 +180,7 @@ namespace VoteM.Models.Organizations
         }
         public bool ExcludeAdmin(string ownerId, string toExcludeAdminId)
         {
-            if (((sbyte)GetRoleInOrganization(ownerId) >= (sbyte)RoleInOrganization.Owner)==false) { return false; }
+            if (((sbyte)GetRoleInOrganization(ownerId) >= (sbyte)RoleInOrganization.Owner) == false) { return false; }
             Members.Admins.Remove(toExcludeAdminId);
             Members.Audience.Remove(toExcludeAdminId);
 
@@ -196,9 +197,9 @@ namespace VoteM.Models.Organizations
             IsDeleted = sGroup.IsDeleted;
             Id = sGroup.Id;
             Nickname = sGroup.Nickname;
-            Attributes = new(sGroup.Attributes);
-            Meta = new(sGroup.Meta);
-            Members = new(sGroup.Members);
+            Attributes = new OrganizationAttributes(sGroup.Attributes);
+            Meta = new Meta(sGroup.Meta);
+            Members = new OrganizationMembers(sGroup.Members);
             VoteIds = sGroup.VoteIds;
         }
     }

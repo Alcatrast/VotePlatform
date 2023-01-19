@@ -1,4 +1,4 @@
-﻿namespace VoteM.Models.SystemServices
+﻿namespace VotePlatform.Models.SystemServices
 {
     public enum RoleInPlatform : sbyte
     {

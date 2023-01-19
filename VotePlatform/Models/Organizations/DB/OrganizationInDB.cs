@@ -1,36 +1,37 @@
-﻿using System.Xml.Serialization;
-using VoteM.Models.Organizations.Serializable;
-using VoteM.Models.Users.Serializable;
-using VoteM.Models.Users;
+﻿using System;
+using System.IO;
+using System.Xml.Serialization;
 
-namespace VoteM.Models.Organizations.DB
+using VotePlatform.Models.Organizations.Serializable;
+
+namespace VotePlatform.Models.Organizations.DB
 {
     public class OrganizationInDB
     {
-        public string Id =string.Empty;
+        public string Id = string.Empty;
         public string Nickname = string.Empty;
         public string SerializedOrganization = string.Empty;
-        public OrganizationInDB() { }   
+        public OrganizationInDB() { }
         public OrganizationInDB(Organization organization)
-        {       
+        {
             Id = organization.Id;
-            Nickname= organization.Nickname;
+            Nickname = organization.Nickname;
 
-            XmlSerializer serializer = new(typeof(SOrganizationV1));
-            StringWriter stringWriter = new();
+            XmlSerializer serializer = new XmlSerializer(typeof(SOrganizationV1));
+            StringWriter stringWriter = new StringWriter();
             serializer.Serialize(stringWriter, new SOrganizationV1(organization));
-            SerializedOrganization=stringWriter.ToString();
+            SerializedOrganization = stringWriter.ToString();
             stringWriter.Close();
         }
         public Organization Construct()
         {
-            XmlSerializer serializer = new(typeof(SOrganizationV1));
-            StringReader stringReader = new(SerializedOrganization);
-            Organization organization = new(new());
+            XmlSerializer serializer = new XmlSerializer(typeof(SOrganizationV1));
+            StringReader stringReader = new StringReader(SerializedOrganization);
+            Organization organization = new Organization(new SOrganizationV1());
             try
             {
                 var ro = serializer.Deserialize(stringReader);
-                if (ro is SOrganizationV1 sOrganization) { organization = new(sOrganization); }
+                if (ro is SOrganizationV1 sOrganization) { organization = new Organization(sOrganization); }
             }
             catch { Console.WriteLine($"{Id} Organization Deserialize Error"); }
             finally { stringReader.Close(); }

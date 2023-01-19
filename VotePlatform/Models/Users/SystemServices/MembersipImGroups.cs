@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
-using VoteM.Models.Users.Serializable;
+using VotePlatform.Models.Users.Serializable;
 
-namespace VoteM.Models.Users
+namespace VotePlatform.Models.Users
 {
     public class MembersipImGroups
     {

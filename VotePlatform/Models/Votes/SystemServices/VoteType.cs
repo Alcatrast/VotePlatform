@@ -1,4 +1,4 @@
-﻿namespace VoteM.Models.Votes
+﻿namespace VotePlatform.Models.Votes
 {
     public enum VoteType : sbyte
     {

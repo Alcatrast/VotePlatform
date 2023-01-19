@@ -1,6 +1,7 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 
-namespace VoteM.Models.Votes
+namespace VotePlatform.Models.Votes
 {
     interface IVote
     {

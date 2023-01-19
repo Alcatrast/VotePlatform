@@ -1,6 +1,6 @@
-﻿using VoteM.Models.SystemServices.Serializable;
+﻿using VotePlatform.Models.SystemServices.Serializable;
 
-namespace VoteM.Models.SystemServices
+namespace VotePlatform.Models.SystemServices
 {
     public class Meta
     {
@@ -8,7 +8,7 @@ namespace VoteM.Models.SystemServices
         public string ShortDescription { get; }
         public string Description { get; }
 
-        public Meta(string name="", string shortDescription="", string description="")
+        public Meta(string name = "", string shortDescription = "", string description = "")
         {
             Name = name;
             ShortDescription = shortDescription;

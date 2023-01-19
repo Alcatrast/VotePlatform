@@ -1,17 +1,18 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
 
-using VoteM.Models.Organizations;
-using VoteM.Models.SystemServices;
-using VoteM.Models.Votes.Serializable;
-using VoteM.Models.DataBaseAPI;
+using VotePlatform.Models.Organizations;
+using VotePlatform.Models.SystemServices;
+using VotePlatform.Models.Votes.Serializable;
+using VotePlatform.Models.DataBaseAPI;
 
-
-namespace VoteM.Models.Votes
+namespace VotePlatform.Models.Votes
 {
     public class Vote : IVote
     {
         public bool IsAvailable { get; set; }
-        public RoleInOrganization MinRoleToView { get { return (RoleInOrganization)new List<sbyte>() { (sbyte)Attibutes.MinRoleToVoting, (sbyte)ResultAttributes.MinRoleToActual }.Max(); } }
+        public RoleInOrganization MinRoleToView { get { return (RoleInOrganization)(new List<sbyte>() { (sbyte)Attibutes.MinRoleToVoting, (sbyte)ResultAttributes.MinRoleToActual }).Max(); } }
         public DateTime CreatingDateTime { get; }
         public VoteId Id { get; }
         public VoteType Type { get; }
@@ -44,7 +45,7 @@ namespace VoteM.Models.Votes
             bool voiceAlreadyExist = IsVoiceAlreadyExist(userId);
             if (voiceAlreadyExist)
             {
-                if(Attibutes.IsVoiceCancellationPossible==false) { return false; }
+                if (Attibutes.IsVoiceCancellationPossible == false) { return false; }
                 if (choice.Count != 1) { return false; }
                 if (choice[0] != -1) { return false; }
             }
@@ -130,18 +131,18 @@ namespace VoteM.Models.Votes
         public Vote(SVoteV1 sVote)
         {
             CreatingDateTime = sVote.CreatingDateTime;
-            Id = new(sVote.Id);
+            Id = new VoteId(sVote.Id);
             Type = sVote.Type;
-            Attibutes = new(sVote.Attibutes);
-            ResultAttributes = new(sVote.ResultAttributes);
-            Meta = new(sVote.Meta);
+            Attibutes = new VoteAttributes(sVote.Attibutes);
+            ResultAttributes = new VoteResultAttributes(sVote.ResultAttributes);
+            Meta = new VoteMeta(sVote.Meta);
             CountVoters = sVote.CountVoters;
             IsAvailable = sVote.IsAvailable;
 
-            AnswersMetas = new();
-            foreach (var it in sVote.AnswersMetas) { AnswersMetas.Add(new(it)); }
-            Voices = new();
-            foreach (var it in sVote.Voices) { Voices.Add(new(it)); }
+            AnswersMetas = new List<VoteMeta>();
+            foreach (var it in sVote.AnswersMetas) { AnswersMetas.Add(new VoteMeta(it)); }
+            Voices = new List<Voice>();
+            foreach (var it in sVote.Voices) { Voices.Add(new Voice(it)); }
         }
     }
 }

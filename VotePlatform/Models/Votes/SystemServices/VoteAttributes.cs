@@ -1,9 +1,10 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 
-using VoteM.Models.SystemServices;
-using VoteM.Models.Votes.Serializable;
+using VotePlatform.Models.SystemServices;
+using VotePlatform.Models.Votes.Serializable;
 
-namespace VoteM.Models.Votes
+namespace VotePlatform.Models.Votes
 {
     public class VoteAttributes
     {

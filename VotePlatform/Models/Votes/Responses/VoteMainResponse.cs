@@ -1,6 +1,7 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 
-namespace VoteM.Models.Votes
+namespace VotePlatform.Models.Votes
 {
     public class VoteMainResponse : IComparable
     {
@@ -34,11 +35,11 @@ namespace VoteM.Models.Votes
         }
         private List<int> GetSimpleResults(Vote vote, string userId)
         {
-            List<int> res = new();
+            List<int> res = new List<int>();
             if (IsActualResultAccessible == false || vote.IsAccessAllowed(userId, vote.ResultAttributes.MinRoleToActual) == false) { return res; }
 
             res = new List<int>(vote.AnswersMetas.Count);
-            List<string> ids = new();
+            List<string> ids = new List<string>();
 
             for (int i = vote.Voices.Count - 1; i >= 0; i--)
             {

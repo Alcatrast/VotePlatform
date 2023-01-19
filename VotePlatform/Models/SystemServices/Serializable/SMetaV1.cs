@@ -1,6 +1,6 @@
-﻿
+﻿using System;
 
-namespace VoteM.Models.SystemServices.Serializable
+namespace VotePlatform.Models.SystemServices.Serializable
 {
     [Serializable]
     public class SMetaV1

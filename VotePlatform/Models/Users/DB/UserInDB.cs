@@ -1,11 +1,10 @@
-﻿using System.Collections.Generic;
+﻿using System;
 using System.IO;
 using System.Xml.Serialization;
 
-using VoteM.Models.SystemServices;
-using VoteM.Models.Users.Serializable;
+using VotePlatform.Models.Users.Serializable;
 
-namespace VoteM.Models.Users.DB
+namespace VotePlatform.Models.Users.DB
 {
     public class UserInDB
     {
@@ -31,13 +30,13 @@ namespace VoteM.Models.Users.DB
         }
         public User Construct()
         {
-            XmlSerializer serializer = new(typeof(SUserV1));
-                StringReader stringReader = new(SerializedUser);
-            User user = new(new());
+            XmlSerializer serializer = new XmlSerializer(typeof(SUserV1));
+            StringReader stringReader = new StringReader(SerializedUser);
+            User user = new User(new SUserV1());
             try
             {
                 var ro = serializer.Deserialize(stringReader);
-                if (ro is SUserV1 sUser) { user = new(sUser); }
+                if (ro is SUserV1 sUser) { user = new User(sUser); }
             }
             catch { Console.WriteLine($"{Id} User Deserialize Error"); }
             finally { stringReader.Close(); }

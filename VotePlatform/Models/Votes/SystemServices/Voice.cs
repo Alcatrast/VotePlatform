@@ -1,7 +1,9 @@
-﻿using System.Collections.Generic;
-using VoteM.Models.Votes.Serializable;
+﻿using System;
+using System.Collections.Generic;
 
-namespace VoteM.Models.Votes
+using VotePlatform.Models.Votes.Serializable;
+
+namespace VotePlatform.Models.Votes
 {
     public class Voice
     {

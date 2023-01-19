@@ -1,7 +1,8 @@
 ﻿using System.Collections.Generic;
-using VoteM.Models.Organizations.Serializable;
 
-namespace VoteM.Models.Organizations
+using VotePlatform.Models.Organizations.Serializable;
+
+namespace VotePlatform.Models.Organizations
 {
     public class OrganizationMembers
     {

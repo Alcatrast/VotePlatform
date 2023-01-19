@@ -1,11 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using VoteM.Models.SystemServices;
+﻿using VotePlatform.Models.SystemServices;
 
-namespace VoteM.Models.Users
+namespace VotePlatform.Models.Users
 {
     public interface IUser
     {

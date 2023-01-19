@@ -1,35 +1,36 @@
-﻿using Microsoft.Data.SqlClient;
-using System.Data;
-using VoteM.Models.Organizations.DB;
-using VoteM.Models.Users.DB;
+﻿using System;
+using System.Collections.Generic;
+using Microsoft.Data.SqlClient;
 
-namespace VoteM.Models.DataBaseAPI.SystemServices
+using VotePlatform.Models.Users.DB;
+
+namespace VotePlatform.Models.DataBaseAPI.SystemServices
 {
-/*
-CREATE TABLE[dbo].[Users]
-(
-    [Id] NVARCHAR (50)  NOT NULL PRIMARY KEY,
-    [Nickname] NVARCHAR(50) NOT NULL,
-    [Email] NVARCHAR(50) NOT NULL,
-    [Password] NVARCHAR(50) NOT NULL,
-    [SerializedUser] NVARCHAR(MAX) NOT NULL
-);
-*/
+    /*
+    CREATE TABLE[dbo].[Users]
+    (
+        [Id] NVARCHAR (50)  NOT NULL PRIMARY KEY,
+        [Nickname] NVARCHAR(50) NOT NULL,
+        [Email] NVARCHAR(50) NOT NULL,
+        [Password] NVARCHAR(50) NOT NULL,
+        [SerializedUser] NVARCHAR(MAX) NOT NULL
+    );
+    */
 
 
     public class UserDataBase
     {
         private string ConnectionString { get; }
-        public UserDataBase(string connectionString)=>ConnectionString= connectionString;
+        public UserDataBase(string connectionString) => ConnectionString = connectionString;
         public List<UserInDB> GetById(string id) { return GetBy("Id", id); }
         public List<UserInDB> GetByNick(string nick) { return GetBy("Nickname", nick); }
-        public List<UserInDB> GetByEmail(string email) { return GetBy("Email", email ); }
-        public List<UserInDB> GetBy(string key,string value)
+        public List<UserInDB> GetByEmail(string email) { return GetBy("Email", email); }
+        public List<UserInDB> GetBy(string key, string value)
         {
-            List<UserInDB> res = new();
-            SqlConnection connection = new(ConnectionString);
+            List<UserInDB> res = new List<UserInDB>();
+            SqlConnection connection = new SqlConnection(ConnectionString);
             connection.Open();
-            SqlCommand command = new($@"SELECT * FROM Users WHERE {key}=N'{value}'", connection);
+            SqlCommand command = new SqlCommand($@"SELECT * FROM Users WHERE {key}=N'{value}'", connection);
             SqlDataReader dataReader = command.ExecuteReader();
             try
             {
@@ -40,7 +41,7 @@ CREATE TABLE[dbo].[Users]
                     var email = Convert.ToString(dataReader["Email"]);
                     var password = Convert.ToString(dataReader["Password"]);
                     var serializedUser = Convert.ToString(dataReader["SerializedUser"]);
-                    res.Add(new()
+                    res.Add(new UserInDB()
                     {
                         Id = id ?? string.Empty,
                         Nickname = nickname ?? string.Empty,
@@ -57,32 +58,32 @@ CREATE TABLE[dbo].[Users]
             }
             return res;
         }
-        public bool Add(UserInDB userInDB) 
+        public bool Add(UserInDB userInDB)
         {
-            SqlConnection connection = new(ConnectionString);
+            SqlConnection connection = new SqlConnection(ConnectionString);
             connection.Open();
-            SqlCommand command = new(@$"INSERT INTO [Users] (Id, Nickname, Email, Password, SerializedUser) VALUES (N'{userInDB.Id}', N'{userInDB.Nickname}', N'{userInDB.Email}', N'{userInDB.Password}', N'{userInDB.SerializedUser}')",connection);
+            SqlCommand command = new SqlCommand(@$"INSERT INTO [Users] (Id, Nickname, Email, Password, SerializedUser) VALUES (N'{userInDB.Id}', N'{userInDB.Nickname}', N'{userInDB.Email}', N'{userInDB.Password}', N'{userInDB.SerializedUser}')", connection);
             command.ExecuteNonQuery();
             connection.Close();
             return true;
         }
         public bool Update(UserInDB userInDB)
         {
-            SqlConnection connection = new(ConnectionString);
+            SqlConnection connection = new SqlConnection(ConnectionString);
             connection.Open();
-            SqlCommand command = new(@$"UPDATE Users SET Id=N'{userInDB.Id}',Nickname=N'{userInDB.Nickname}',Email=N'{userInDB.Email}',Password=N'{userInDB.Password}', SerializedUser=N'{userInDB.SerializedUser}'  WHERE Id=N'{userInDB.Id}'",connection);
+            SqlCommand command = new SqlCommand(@$"UPDATE Users SET Id=N'{userInDB.Id}',Nickname=N'{userInDB.Nickname}',Email=N'{userInDB.Email}',Password=N'{userInDB.Password}', SerializedUser=N'{userInDB.SerializedUser}'  WHERE Id=N'{userInDB.Id}'", connection);
             command.ExecuteNonQuery();
             connection.Close();
             return true;
         }
         public int CountUsers()
         {
-            SqlConnection connection = new(ConnectionString);
+            SqlConnection connection = new SqlConnection(ConnectionString);
             connection.Open();
-            SqlCommand command = new(@$"SELECT count(*) FROM Users", connection);
-            var resp = Convert.ToString( command.ExecuteScalar());
+            SqlCommand command = new SqlCommand(@$"SELECT count(*) FROM Users", connection);
+            var resp = Convert.ToString(command.ExecuteScalar());
             if (resp != null) { return int.Parse(resp); }
             else { return 0; }
-        } 
+        }
     }
 }

@@ -1,4 +1,4 @@
-﻿namespace VoteM.Models.Organizations
+﻿namespace VotePlatform.Models.Organizations
 {
     public enum OrganizationTypeOfJoin : sbyte
     {
