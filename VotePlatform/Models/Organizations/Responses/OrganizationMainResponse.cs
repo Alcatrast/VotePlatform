@@ -14,7 +14,7 @@ namespace VotePlatform.Models.Organizations
         public Meta Meta { get; private set; }
         public OrganizationAttributes Attributes { get; private set; }
         public int CountMembers { get; private set; }
-        public List<VoteMainResponse> Votes { get; private set; }
+        public List<VoteDemoResponse> Votes { get; private set; }
         public string UserId { get; private set; }
         public RoleInOrganization InGroupRole { get; private set; }
         public RoleInPlatform InPlatformRole { get; private set; }
@@ -30,15 +30,15 @@ namespace VotePlatform.Models.Organizations
             InPlatformRole = group.GetRoleInPlatform(userId);
             Votes = GetVotes(group, userId);
         }
-        private static List<VoteMainResponse> GetVotes(Organization group, string userId)
+        private static List<VoteDemoResponse> GetVotes(Organization group, string userId)
         {
-            List<VoteMainResponse> res = new List<VoteMainResponse>(), pvs = new List<VoteMainResponse>(), upvs = new List<VoteMainResponse>();
+            List<VoteDemoResponse> res = new List<VoteDemoResponse>(), pvs = new List<VoteDemoResponse>(), upvs = new List<VoteDemoResponse>();
 
             var votes = VotesDataBaseAPI.FindAllBelongingTo(group, group.GetRoleInOrganization(userId), group.GetRoleInPlatform(userId));
 
             foreach (var vote in votes)
             {
-                var mrv = new VoteMainResponse(vote, userId);
+                var mrv = new VoteDemoResponse(vote, userId);
                 if (mrv.Meta.IsPinned) { pvs.Add(mrv); }
                 else { upvs.Add(mrv); }
             }

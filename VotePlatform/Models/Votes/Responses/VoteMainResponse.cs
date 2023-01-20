@@ -13,6 +13,8 @@ namespace VotePlatform.Models.Votes
         public VoteResultAttributes ResultAttributes { get; }
         public VoteMeta Meta { get; }
         public List<VoteMeta> AnswersMetas { get; }
+
+        public List<int> UrerVoice { get; }
         public List<int> SimpleResults { get; }
         public bool IsActualResultAccessible { get; }
         public bool IsDynamicResultAccessible { get; }
@@ -29,6 +31,7 @@ namespace VotePlatform.Models.Votes
             Meta = vote.Meta;
             AnswersMetas = vote.AnswersMetas;
             CountVoters = vote.CountVoters;
+            UrerVoice = GetUserVoice(vote, userId);
             SimpleResults = GetSimpleResults(vote, userId);
             IsActualResultAccessible = GetIsActualResultAccessible(vote, userId);
             IsDynamicResultAccessible = GetIsDynamicResultAccessible(vote, userId);
@@ -67,6 +70,18 @@ namespace VotePlatform.Models.Votes
         }
         private static bool GetIsActualResultAccessible(Vote vote, string userId) { return vote.IsAccessAllowed(userId, vote.ResultAttributes.MinRoleToActual); }/// }
         private static bool GetIsDynamicResultAccessible(Vote vote, string userId) { return vote.IsAccessAllowed(userId, vote.ResultAttributes.MinRoleToDynamic); }/// }
+        private static List<int> GetUserVoice(Vote vote, string userId) 
+        {
+            List<int> res = new List<int>() { -1 };
+            for(int i = vote.Voices.Count - 1; i >= 0; i--)
+            {
+                if (vote.Voices[i].UserId == userId)
+                {
+                    res = vote.Voices[i].AnswerIndexes;
+                }
+            }
+            return res;
+        }
 
         int IComparable.CompareTo(object? obj)
         {
