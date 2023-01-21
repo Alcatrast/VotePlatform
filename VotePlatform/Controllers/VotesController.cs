@@ -9,6 +9,7 @@ namespace VotePlatform.Controllers
     {
         public ViewResult Vote()
         {
+            var r = Request.Headers;
             var dv = new DemoVote(new VoteDemoResponse(new Vote(new SVoteV1() { Meta=new SVoteMetaV1() { Header="да.", Description="я смог это."} })));
             return View(dv);
         }
