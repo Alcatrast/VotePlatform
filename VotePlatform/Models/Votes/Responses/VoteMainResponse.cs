@@ -55,7 +55,7 @@ namespace VotePlatform.Models.Votes
                         {
                             if (Type == VoteType.PreferVote)
                             {
-                                res[vote.Voices[i].AnswerIndexes[i]] += vote.AnswersMetas.Count - 1 - i;
+                                res[vote.Voices[i].AnswerIndexes[i]] += vote.AnswersMetas.Count - 1 - index;
                             }
                             else
                             {

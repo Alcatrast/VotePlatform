@@ -8,9 +8,10 @@ namespace VotePlatform.Models.Organizations
 {
     public class OrganizationMainResponse
     {
-        public bool IsDeleted { get; set; }
+        public bool IsDeleted { get; }
 
         public string Id { get; private set; }
+        public string Nick { get; }
         public Meta Meta { get; private set; }
         public OrganizationAttributes Attributes { get; private set; }
         public int CountMembers { get; private set; }
@@ -22,6 +23,7 @@ namespace VotePlatform.Models.Organizations
         {
             IsDeleted = group.IsDeleted;
             Id = group.Id;
+            Nick=group.Nickname;
             Meta = group.Meta;
             Attributes = group.Attributes;
             CountMembers = group.Members.AllMembers.Count;
