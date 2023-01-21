@@ -23,6 +23,7 @@ namespace VotePlatform.ViewModels.Users
             nickname=response.Nickname;
             email=response.Email;
             meta=response.Meta;
+
             role = response.Role switch
             {
                 RoleInPlatform.User => "Пользователь",
@@ -32,6 +33,7 @@ namespace VotePlatform.ViewModels.Users
                 RoleInPlatform.Passerby => "Заблокирован",
                 _ => "Заблокирован",
             };
+
             ownedOrg = new List<DemoOrganization>();
             adminedOrg = new List<DemoOrganization>();  
             audiencedOrg= new List<DemoOrganization>();

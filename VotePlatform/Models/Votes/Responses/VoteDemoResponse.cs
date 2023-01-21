@@ -14,7 +14,7 @@ namespace VotePlatform.Models.Votes
         public VoteResultAttributes ResultAttributes { get; }
         public VoteMeta Meta { get; }
        
-        public VoteDemoResponse(Vote vote, string userId)
+        public VoteDemoResponse(Vote vote)
         {
             IsAvailable = vote.IsAvailable;
             Id = vote.Id;
@@ -29,7 +29,7 @@ namespace VotePlatform.Models.Votes
         {
             if (obj != null)
             {
-                var other = (VoteMainResponse)obj;
+                var other = (VoteDemoResponse)obj;
                 return DateTime.Compare(CreatingDateTime, other.CreatingDateTime);
             }
             else { return DateTime.Compare(new DateTime(), new DateTime()); }

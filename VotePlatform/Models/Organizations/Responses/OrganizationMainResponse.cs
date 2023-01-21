@@ -40,7 +40,7 @@ namespace VotePlatform.Models.Organizations
 
             foreach (var vote in votes)
             {
-                var mrv = new VoteDemoResponse(vote, userId);
+                var mrv = new VoteDemoResponse(vote);
                 if (mrv.Meta.IsPinned) { pvs.Add(mrv); }
                 else { upvs.Add(mrv); }
             }
