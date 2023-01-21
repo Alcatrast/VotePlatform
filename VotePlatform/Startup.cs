@@ -30,10 +30,9 @@ namespace VotePlatform
 
             app.UseEndpoints(endpoints =>
             {
-                endpoints.MapGet("/", async context =>
-                {
-                    await context.Response.WriteAsync("Hello World!");
-                });
+                endpoints.MapControllerRoute(
+                    name: "default",
+                    pattern: "{controller=Votes}/{action=Vote}/{id?}");
             });
         }
     }
