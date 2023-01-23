@@ -11,7 +11,7 @@ namespace VotePlatform.Controllers
         {
             ViewBag.Title = "АБОБАААА";
             var r = Request.Headers;
-            var dv = new DemoVote(new VoteDemoResponse(new Vote(new SVoteV1() { Meta=new SVoteMetaV1() { Header="да.", Description="я смог это."} })));
+            var dv = new DemoVote(new VoteDemoResponse(new Vote(new SVoteV1() { Meta=new SVoteMetaV1() { Header="да.", Description="чурка."} })));
             return View(dv);
         }
     }
