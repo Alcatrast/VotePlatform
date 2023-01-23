@@ -79,14 +79,14 @@ namespace VotePlatform
             Console.WriteLine("Votes added");
         }
 
-        public static string ConnectionString = @"Data Source=(LocalDB)\MSSQLLocalDB;AttachDbFilename=C:\Users\LaL\source\repos\DB\DB\VPDB.mdf;Integrated Security=True";
+        public static string ConnectionString = @"Data Source=(LocalDB)\MSSQLLocalDB;AttachDbFilename=C:\Users\LaL\source\repos\VotePlatform\DataBase\DBVP.mdf;Integrated Security=True";
         public static void MainZalupa()
         {
             Console.WriteLine("Hello, World!");
             Startup();
             Console.WriteLine("Startup completed");
 
-            // SAV();
+             SAV();
 
             //OrganizationsDataBaseAPI.FindById("o1", out Organization organization);
             // var vts = VotesDataBaseAPI.FindAllBelongingTo(organization,RoleInOrganization.Audience,RoleInPlatform.User);
