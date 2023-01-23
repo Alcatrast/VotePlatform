@@ -39,9 +39,9 @@ namespace VotePlatform.Models.Votes
         private List<int> GetSimpleResults(Vote vote, string userId)
         {
             List<int> res = new List<int>();
+            for(int i=0;i< vote.AnswersMetas.Count; i++) { res.Add(0); }
             if (IsActualResultAccessible == false || vote.IsAccessAllowed(userId, vote.ResultAttributes.MinRoleToActual) == false) { return res; }
 
-            res = new List<int>(vote.AnswersMetas.Count);
             List<string> ids = new List<string>();
 
             for (int i = vote.Voices.Count - 1; i >= 0; i--)
@@ -55,11 +55,11 @@ namespace VotePlatform.Models.Votes
                         {
                             if (Type == VoteType.PreferVote)
                             {
-                                res[vote.Voices[i].AnswerIndexes[i]] += vote.AnswersMetas.Count - 1 - index;
+                                res[vote.Voices[i].AnswerIndexes[index]] += vote.AnswersMetas.Count - 1 - index;
                             }
                             else
                             {
-                                res[vote.Voices[i].AnswerIndexes[i]]++;
+                                res[vote.Voices[i].AnswerIndexes[index]]++;
                             }
                         }
                     }

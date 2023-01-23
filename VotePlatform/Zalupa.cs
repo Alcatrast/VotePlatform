@@ -78,27 +78,21 @@ namespace VotePlatform
                );
             Console.WriteLine("Votes added");
         }
+        //,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
+        public static string ConnectionString = CFG.N;
+        //,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
 
-        public static string ConnectionString = @"Data Source=(LocalDB)\MSSQLLocalDB;AttachDbFilename=C:\Users\LaL\source\repos\VotePlatform\DataBase\DBVP.mdf;Integrated Security=True";
         public static void MainZalupa()
         {
             Console.WriteLine("Hello, World!");
             Startup();
             Console.WriteLine("Startup completed");
 
-             SAV();
+            //SAV();
 
-            //OrganizationsDataBaseAPI.FindById("o1", out Organization organization);
-            // var vts = VotesDataBaseAPI.FindAllBelongingTo(organization,RoleInOrganization.Audience,RoleInPlatform.User);
             VotesDataBaseAPI.FindById(new VoteId("o1", "v1"), out Vote vote1);
-            vote1.Voiting("u4", new List<int>() { 0 });
-            vote1.Voiting("u1", new List<int> { 1 });
-            //vote1.Voiting("u4", new() { -1 });
+            vote1.Voiting("u1", new List<int>() { 2 });
             VotesDataBaseAPI.Update(vote1);
-            //foreach (var it in vote1.Voices)
-            //{
-            //    Console.WriteLine(it.UserId);
-            //}
         }
 
     }

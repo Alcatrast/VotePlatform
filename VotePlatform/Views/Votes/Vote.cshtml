@@ -6,7 +6,21 @@
     <h2>@Model.attributes</h2>
     <h1>@Model.meta.Header</h1>
     <h2>@Model.meta.Description</h2>
-    
-    
+
+    for (int i = 0; i < Model.answersMetas.Count; i++)
+    {
+        var idRes = $"a{Convert.ToString(i)}";
+        <label for=@idRes> @Model.answersMetas[i].Header</label>
+        <h2> </h2>
+        <label> @Model.answersMetas[i].Description</label>
+        <h2> </h2>
+        //if (Model.simpleResults[0] != 0)
+        //{
+        var res = $"{Convert.ToString(Model.simpleResults[i])} голосов.";
+        <label id=@idRes>@res</label>
+        <h6> </h6>
+        //}
+    }
+
 }
 

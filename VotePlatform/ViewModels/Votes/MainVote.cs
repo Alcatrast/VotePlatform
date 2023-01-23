@@ -75,8 +75,9 @@ namespace VotePlatform.ViewModels.Votes
 
             isActualResultAccessible = response.IsActualResultAccessible;
             countVoters = response.CountVoters;
+            simpleResults = response.SimpleResults;
 
-            isDynamicResultAccessible=response.IsDynamicResultAccessible;
+            isDynamicResultAccessible =response.IsDynamicResultAccessible;
             urlToDynamic = string.Empty;
 
             attributes = $"{minRoleToVoting} {timeActiveToVote} {isAnonimousVote} {isVoiceCancellationPossible} {isExtendPossible} {resultsOnlyAfterCompletion}";
