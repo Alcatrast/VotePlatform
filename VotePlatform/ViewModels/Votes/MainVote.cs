@@ -19,6 +19,8 @@ namespace VotePlatform.ViewModels.Votes
         public string isExtendPossible;
         public string resultsOnlyAfterCompletion;
 
+        public string attributes;
+        
         public List<VoteMeta> answersMetas;
         public List<int> userVoice;
 
@@ -28,6 +30,7 @@ namespace VotePlatform.ViewModels.Votes
 
         public bool isDynamicResultAccessible;
         public string urlToDynamic;
+
         public MainVote(VoteMainResponse response)
         {
             isAvailable = response.IsAvailable;
@@ -51,20 +54,24 @@ namespace VotePlatform.ViewModels.Votes
             answersMetas = response.AnswersMetas;
 
             userVoice = new List<int>(response.AnswersMetas.Count);
-            if (response.Type == VoteType.PreferVote)
-            {
-                for (int i = 0; i < response.UrerVoice.Count; i++)
-                {
-                    userVoice[response.UrerVoice[i]] = response.UrerVoice.Count - 1 - i;
-                }
-            }
-            else
-            {
-                for (int i = 0; i < response.UrerVoice.Count; i++)
-                {
-                    userVoice[response.UrerVoice[i]] = 1;
-                }
-            }
+
+            //if (response.UrerVoice.Count > 0)
+            //{
+            //    if (response.Type == VoteType.PreferVote)
+            //    {
+            //        for (int i = 0; i < response.UrerVoice.Count; i++)
+            //        {
+            //            userVoice[response.UrerVoice[i]] = response.UrerVoice.Count - 1 - i;
+            //        }
+            //    }
+            //    else
+            //    {
+            //        for (int i = 0; i < response.UrerVoice.Count; i++)
+            //        {
+            //            userVoice[response.UrerVoice[i]] = 1;
+            //        }
+            //    }
+            //}
 
             isActualResultAccessible = response.IsActualResultAccessible;
             countVoters = response.CountVoters;
@@ -72,6 +79,7 @@ namespace VotePlatform.ViewModels.Votes
             isDynamicResultAccessible=response.IsDynamicResultAccessible;
             urlToDynamic = string.Empty;
 
+            attributes = $"{minRoleToVoting} {timeActiveToVote} {isAnonimousVote} {isVoiceCancellationPossible} {isExtendPossible} {resultsOnlyAfterCompletion}";
         }
     }
 }

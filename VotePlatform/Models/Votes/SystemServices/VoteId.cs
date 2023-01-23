@@ -18,5 +18,25 @@ namespace VotePlatform.Models.Votes
             OwnerGroupId = sVoteId.OwnerGroupId;
             IndexIn = sVoteId.Index;
         }
+        public VoteId(string? id)
+        {
+            OwnerGroupId = "o0";
+            IndexIn = "v0";
+            if(id == null) { return; }
+            try
+            {
+                if (id.Length > 0)
+                {
+                    string[] ss = id.Split('-');
+                    OwnerGroupId = ss[0];
+                    IndexIn = ss[1];
+                }
+            }
+            catch
+            {
+                OwnerGroupId = "o0";
+                IndexIn = "v0";
+            }
+        }
     }
 }

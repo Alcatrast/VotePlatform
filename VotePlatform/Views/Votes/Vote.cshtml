@@ -1,5 +1,12 @@
-﻿@model DemoVote
+﻿@model MainVote
 
+@{
+    if (Model.isAvailable == false) { <h1>Голосование удалено.</h1> }
+    if (Model.meta.IsPinned) { <h3>Закреплено.</h3> }
+    <h2>@Model.attributes</h2>
+    <h1>@Model.meta.Header</h1>
+    <h2>@Model.meta.Description</h2>
+    
+    
+}
 
-    <h1> @Model.title</h1>
-    <h2>@Model.description</h2>

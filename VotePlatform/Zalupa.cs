@@ -79,7 +79,7 @@ namespace VotePlatform
             Console.WriteLine("Votes added");
         }
 
-        public static string ConnectionString = @"Data Source=(LocalDB)\MSSQLLocalDB;AttachDbFilename=C:\Users\RIMUCHER\Desktop\VoteM\VoteM\Database1.mdf;Integrated Security=True";
+        public static string ConnectionString = @"Data Source=(LocalDB)\MSSQLLocalDB;AttachDbFilename=C:\Users\LaL\source\repos\DB\DB\VPDB.mdf;Integrated Security=True";
         public static void MainZalupa()
         {
             Console.WriteLine("Hello, World!");
@@ -92,12 +92,13 @@ namespace VotePlatform
             // var vts = VotesDataBaseAPI.FindAllBelongingTo(organization,RoleInOrganization.Audience,RoleInPlatform.User);
             VotesDataBaseAPI.FindById(new VoteId("o1", "v1"), out Vote vote1);
             vote1.Voiting("u4", new List<int>() { 0 });
+            vote1.Voiting("u1", new List<int> { 1 });
             //vote1.Voiting("u4", new() { -1 });
             VotesDataBaseAPI.Update(vote1);
-            foreach (var it in vote1.Voices)
-            {
-                Console.WriteLine(it.UserId);
-            }
+            //foreach (var it in vote1.Voices)
+            //{
+            //    Console.WriteLine(it.UserId);
+            //}
         }
 
     }
