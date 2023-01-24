@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Azure;
+using System;
 using System.Collections.Generic;
 
 namespace VotePlatform.Models.Votes
@@ -6,6 +7,7 @@ namespace VotePlatform.Models.Votes
     public class VoteMainResponse : IComparable
     {
         public bool IsAvailable { get; }
+        
         public DateTime CreatingDateTime { get; }
         public VoteId Id { get; }
         public VoteType Type { get; }
@@ -16,6 +18,9 @@ namespace VotePlatform.Models.Votes
 
         public List<int> UrerVoice { get; }
         public List<int> SimpleResults { get; }
+
+        public bool IsVotingAccessible { get; }
+
         public bool IsActualResultAccessible { get; }
         public bool IsDynamicResultAccessible { get; }
         public int CountVoters { get; }
@@ -33,6 +38,7 @@ namespace VotePlatform.Models.Votes
             CountVoters = vote.CountVoters;
             UrerVoice = GetUserVoice(vote, userId);
             SimpleResults = GetSimpleResults(vote, userId);
+            IsVotingAccessible = vote.IsVotingAccessible(userId);
             IsActualResultAccessible = GetIsActualResultAccessible(vote, userId);
             IsDynamicResultAccessible = GetIsDynamicResultAccessible(vote, userId);
         }

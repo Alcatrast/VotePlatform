@@ -21,7 +21,7 @@ namespace VotePlatform
 {
     internal static class Zalupa
     {
-        private static void Startup()
+        private static void StartFilling()
         {
             SqlConnection connection = new SqlConnection(ConnectionString);
             connection.Open();
@@ -34,10 +34,6 @@ namespace VotePlatform
 
             connection.Close();
             Console.WriteLine("Tables created.");
-
-            UsersDataBaseAPI.Initialize(ConnectionString);
-            OrganizationsDataBaseAPI.Initialize(ConnectionString);
-            VotesDataBaseAPI.Initialize(ConnectionString);
 
             UsersDataBaseAPI.Create("@owner", "owner@gmail.com", "Owner", "OWNER");
             UsersDataBaseAPI.FindByNick("@owner", out User owner);
@@ -67,6 +63,12 @@ namespace VotePlatform
             Console.WriteLine("Organizations added.");
 
         }
+        public static void InitializateDB()
+        {
+            UsersDataBaseAPI.Initialize(ConnectionString);
+            OrganizationsDataBaseAPI.Initialize(ConnectionString);
+            VotesDataBaseAPI.Initialize(ConnectionString);
+        }
         public static void SAV()
         {
             VotesDataBaseAPI.Create("u4", "o1", VoteType.AloneAswer,
@@ -79,16 +81,18 @@ namespace VotePlatform
             Console.WriteLine("Votes added");
         }
         //,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
-        public static string ConnectionString = CFG.N;
+        public static string ConnectionString = CFG.D;
         //,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
 
         public static void MainZalupa()
         {
             Console.WriteLine("Hello, World!");
-            Startup();
-            Console.WriteLine("Startup completed");
-
+            
+            InitializateDB();
+            //StartFilling();
             //SAV();
+            
+            Console.WriteLine("Startup completed");
 
             VotesDataBaseAPI.FindById(new VoteId("o1", "v1"), out Vote vote1);
             vote1.Voiting("u1", new List<int>() { 2 });

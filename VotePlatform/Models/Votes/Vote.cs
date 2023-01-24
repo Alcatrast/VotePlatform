@@ -6,6 +6,7 @@ using VotePlatform.Models.Organizations;
 using VotePlatform.Models.SystemServices;
 using VotePlatform.Models.Votes.Serializable;
 using VotePlatform.Models.DataBaseAPI;
+using VotePlatform.Models.Users;
 
 namespace VotePlatform.Models.Votes
 {
@@ -38,10 +39,7 @@ namespace VotePlatform.Models.Votes
 
         public bool Voiting(string userId, List<int> choice)
         {
-            if (IsAvailable == false) { return false; }
-            if (IsAvaliableTimeToVote() == false) { return false; }
-
-            if (IsAccessAllowed(userId, Attibutes.MinRoleToVoting) == false || UsersDataBaseAPI.FindById(userId, out _) == false) { return false; }
+            if (IsVotingAccessible(userId)) { return false; }
             bool voiceAlreadyExist = IsVoiceAlreadyExist(userId);
             if (voiceAlreadyExist)
             {
@@ -143,6 +141,16 @@ namespace VotePlatform.Models.Votes
             foreach (var it in sVote.AnswersMetas) { AnswersMetas.Add(new VoteMeta(it)); }
             Voices = new List<Voice>();
             foreach (var it in sVote.Voices) { Voices.Add(new Voice(it)); }
+        }
+        public bool IsVotingAccessible(string userId)
+        {
+            if (IsAvailable == false) { return false; }
+            if (IsAvaliableTimeToVote() == false) { return false; }
+
+            if (IsAccessAllowed(userId, Attibutes.MinRoleToVoting) == false || UsersDataBaseAPI.FindById(userId, out User user) == false) { return false; }
+            if ((sbyte)user.Role <= (sbyte)RoleInPlatform.Passerby) { return false; }
+            if(Attibutes.IsVoiceCancellationPossible== false) { if (IsVoiceAlreadyExist(userId)) { return false; }; }
+            return true;
         }
     }
 }

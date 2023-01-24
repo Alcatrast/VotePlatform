@@ -10,8 +10,10 @@ namespace VotePlatform.ViewModels.Votes
     {
         public bool isAvailable;
         public VoteMeta meta;
+        public VoteAttributes attributes;
         public string creatingDateTime;
-        public string type;
+        public VoteType type;
+        public string typeStr;
         public string minRoleToVoting;
         public string timeActiveToVote;
         public string isAnonimousVote;
@@ -19,8 +21,10 @@ namespace VotePlatform.ViewModels.Votes
         public string isExtendPossible;
         public string resultsOnlyAfterCompletion;
 
-        public string attributes;
-        
+        public string attributesStr;
+
+        public bool isVotingAccessible;
+
         public List<VoteMeta> answersMetas;
         public List<int> userVoice;
 
@@ -34,12 +38,13 @@ namespace VotePlatform.ViewModels.Votes
         public MainVote(VoteMainResponse response)
         {
             isAvailable = response.IsAvailable;
+            attributes= response.Attributes;
             meta = response.Meta;
             creatingDateTime = response.CreatingDateTime.ToLongDateString();
-
-            if (response.Type == VoteType.AloneAswer) { type = ""; }
-            if (response.Type == VoteType.SomeAnswers) { type = "несколько вариантов"; }
-            if (response.Type == VoteType.PreferVote) { type = "предпочтение"; }
+            type= response.Type;
+            if (response.Type == VoteType.AloneAswer) { typeStr = ""; }
+            if (response.Type == VoteType.SomeAnswers) { typeStr = "несколько вариантов"; }
+            if (response.Type == VoteType.PreferVote) { typeStr = "предпочтение"; }
 
             if (response.Attributes.MinRoleToVoting >= RoleInOrganization.Audience) { minRoleToVoting = "частное голосование"; } else { minRoleToVoting = string.Empty; }
 
@@ -50,6 +55,8 @@ namespace VotePlatform.ViewModels.Votes
             isVoiceCancellationPossible = response.Attributes.IsAnonimousVote ? string.Empty : "переголосовать нельзя";
             isExtendPossible = response.Attributes.IsExtendPossible ? "возможно продление" : string.Empty;
             resultsOnlyAfterCompletion = response.ResultAttributes.ResultsOnlyAfterCompletion ? "результаты по окончании" : string.Empty;
+
+            isVotingAccessible = response.IsVotingAccessible;
 
             answersMetas = response.AnswersMetas;
 
@@ -80,7 +87,7 @@ namespace VotePlatform.ViewModels.Votes
             isDynamicResultAccessible =response.IsDynamicResultAccessible;
             urlToDynamic = string.Empty;
 
-            attributes = $"{minRoleToVoting} {timeActiveToVote} {isAnonimousVote} {isVoiceCancellationPossible} {isExtendPossible} {resultsOnlyAfterCompletion}";
+            attributesStr = $"{minRoleToVoting} {timeActiveToVote} {isAnonimousVote} {isVoiceCancellationPossible} {isExtendPossible} {resultsOnlyAfterCompletion}";
         }
     }
 }

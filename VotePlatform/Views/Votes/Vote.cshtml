@@ -1,26 +1,74 @@
-﻿@model MainVote
+﻿@using VotePlatform.Models.Votes;
+@model MainVote
 
 @{
     if (Model.isAvailable == false) { <h1>Голосование удалено.</h1> }
     if (Model.meta.IsPinned) { <h3>Закреплено.</h3> }
-    <h2>@Model.attributes</h2>
+}
+    <h2>@Model.attributesStr</h2>
     <h1>@Model.meta.Header</h1>
     <h2>@Model.meta.Description</h2>
 
-    for (int i = 0; i < Model.answersMetas.Count; i++)
-    {
-        var idRes = $"a{Convert.ToString(i)}";
-        <label for=@idRes> @Model.answersMetas[i].Header</label>
-        <h2> </h2>
-        <label> @Model.answersMetas[i].Description</label>
-        <h2> </h2>
-        //if (Model.simpleResults[0] != 0)
-        //{
-        var res = $"{Convert.ToString(Model.simpleResults[i])} голосов.";
-        <label id=@idRes>@res</label>
-        <h6> </h6>
-        //}
-    }
+  
+<form action="/Votes/Vote?id=o1-v1" method="post">
+       <div>
+        @{
+            for (int i = 0; i < Model.answersMetas.Count; i++)
+            {
 
-}
+
+                var idRes = $"{Convert.ToString(i)}";
+
+                if (Model.type == VoteType.AloneAswer)
+                {
+                    <input type="radio" id=@idRes name="vote" value=@idRes>
+                }
+                else if (Model.type == VoteType.SomeAnswers)
+                {
+                    <input type="checkbox" id=@idRes name=@idRes value=@idRes>
+                }
+                else if (Model.type == VoteType.PreferVote)
+                {
+                    <input type="number" id=@idRes name=@idRes value=@idRes>
+               }
+        
+
+        <label for=@idRes> @Model.answersMetas[i].Header</label>
+        
+        <h2> </h2>
+
+       <label for =@idRes> @Model.answersMetas[i].Description</label>
+       
+                <h2> </h2>
+
+                if (Model.simpleResults[0] != 0)
+                {
+                var res = $"{Convert.ToString(Model.simpleResults[i])} голосов.";
+
+                if (Model.attributes.IsAnonimousVote)
+                {
+                    <label>@res</label>
+                }
+                else
+                {
+                    <a href="/Votes/Vote?id =o1-v1" target="_blank">@res</a>
+                }
+                <h6> </h6>
+            }
+            }
+
+
+        }      
+    </div>
+    @{
+        if (Model.isVotingAccessible)
+    {
+        <div>
+            <input type="submit" value="Проголосовать"/>
+     </div>
+    }
+   }
+  </form>
+
+
 
