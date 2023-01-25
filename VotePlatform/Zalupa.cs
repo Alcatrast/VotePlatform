@@ -81,7 +81,7 @@ namespace VotePlatform
             Console.WriteLine("Votes added");
         }
         //,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
-        public static string ConnectionString = CFG.D;
+        public static string ConnectionString = CFG.N;
         //,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
 
         public static void MainZalupa()
@@ -94,9 +94,9 @@ namespace VotePlatform
             
             Console.WriteLine("Startup completed");
 
-            VotesDataBaseAPI.FindById(new VoteId("o1", "v1"), out Vote vote1);
-            vote1.Voiting("u1", new List<int>() { 2 });
-            VotesDataBaseAPI.Update(vote1);
+            //VotesDataBaseAPI.FindById(new VoteId("o1", "v1"), out Vote vote1);
+            //vote1.Voiting("u1", new List<int>() { 2 });
+            //VotesDataBaseAPI.Update(vote1);
         }
 
     }
