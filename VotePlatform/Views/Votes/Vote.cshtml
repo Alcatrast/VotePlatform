@@ -107,7 +107,7 @@
 </div>
 @{
     //кнопка отправки голоса
-    if (Model.isVotingAccessible && Model.isCancellationPossible == false)
+    if (Model.isVotingAccessible && (Model.isCancellationPossible == false))
     {
         <div>
             <input type="submit" value="Проголосовать" />
