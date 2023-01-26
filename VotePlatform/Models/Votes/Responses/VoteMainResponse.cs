@@ -4,7 +4,7 @@ using System.Collections.Generic;
 
 namespace VotePlatform.Models.Votes
 {
-    public class VoteMainResponse : IComparable
+    public class VoteMainResponse
     {
         public bool IsAvailable { get; }
         
@@ -78,25 +78,18 @@ namespace VotePlatform.Models.Votes
         private static bool GetIsDynamicResultAccessible(Vote vote, string userId) { return vote.IsAccessAllowed(userId, vote.ResultAttributes.MinRoleToDynamic); }/// }
         private static List<int> GetUserVoice(Vote vote, string userId) 
         {
-            List<int> res = new List<int>() { -1 };
-            for(int i = vote.Voices.Count - 1; i >= 0; i--)
-            {
-                if (vote.Voices[i].UserId == userId)
-                {
-                    res = vote.Voices[i].AnswerIndexes;
-                }
-            }
-            return res;
-        }
+            List<int> res = new List<int>();
+            for(int i=0;i<vote.AnswersMetas.Count;i++) { res.Add(0); }
 
-        int IComparable.CompareTo(object? obj)
-        {
-            if (obj != null)
-            {
-                var other = (VoteMainResponse)obj;
-                return DateTime.Compare(CreatingDateTime, other.CreatingDateTime);
-            }
-            else { return DateTime.Compare(new DateTime(), new DateTime()); }
+            //for(int i = vote.Voices.Count - 1; i >= 0; i--)
+            //{
+            //    if (vote.Voices[i].UserId == userId)
+            //    {
+            //        res = vote.Voices[i].AnswerIndexes;
+            //        break;
+            //    }
+            //}
+            return res;
         }
     }
 }

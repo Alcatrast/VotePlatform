@@ -60,7 +60,7 @@ namespace VotePlatform.ViewModels.Votes
 
             answersMetas = response.AnswersMetas;
 
-            userVoice = new List<int>(response.AnswersMetas.Count);
+            userVoice = response.UrerVoice;
 
             //if (response.UrerVoice.Count > 0)
             //{
