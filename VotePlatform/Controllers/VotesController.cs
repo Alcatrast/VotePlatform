@@ -31,31 +31,31 @@ namespace VotePlatform.Controllers
         }
 
         //[HttpPost]
-        public async Task<ViewResult> Voting(string id,string vote)
+        public async Task<ViewResult> Voting(string id)
         {
             ViewBag.Title = "АБОБАААА";
-            var r = Request.Headers;
+
             VoteId vId = new VoteId(id);
-            VotesDataBaseAPI.FindById(vId, out Vote votje);
+            VotesDataBaseAPI.FindById(vId, out Vote vote);
             var userId = "u1";
-            string bodyStr = string.Empty;
-            // try {
 
-            //bodyStr = await (new StreamReader(Request.Body)).ReadToEndAsync();
-           // System.IO.File.AppendAllLines(@"c:\temp\bb.txt", new List<string>() { $" gg {bodyStr}" });
+            if (vote.Type == VoteType.AloneAswer)
+            {
+
+            }
+            else if(vote.Type == VoteType.SomeAnswers)
+            {
+
+            }
+            else if(vote.Type == VoteType.PreferVote)
+            {
+
+            }
+
+            System.IO.File.AppendAllLines(@"c:\temp\bb.txt", new List<string>() { $"{Request.Form["vote"][0]}" });
 
 
-            //}catch { }
-            //var body = QueryHelpers.ParseQuery(bodyStr);
-            System.IO.File.AppendAllLines(@"c:\temp\bb.txt", new List<string>() { $"{vote}" });
-
-            //foreach (var item in body)
-            //{
-            //    System.IO.File.AppendAllLines(@"c:\temp\bb.txt", new List<string>() { $"{item.Key} {item.Value}" });
-            //}
-            //if (body.ContainsKey("vote")) { throw new NotImplementedException(); }
-
-            return View(new MainVote(new VoteMainResponse(votje, userId))) ;
+            return View(new MainVote(new VoteMainResponse(vote, userId))) ;
         }
     }
 }

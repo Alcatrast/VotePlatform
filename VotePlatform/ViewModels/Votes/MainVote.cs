@@ -17,7 +17,7 @@ namespace VotePlatform.ViewModels.Votes
         public string minRoleToVoting;
         public string timeActiveToVote;
         public string isAnonimousVote;
-        public string isVoiceCancellationPossible;
+        public string isVoiceCancellationPossibleStr;
         public string isExtendPossible;
         public string resultsOnlyAfterCompletion;
 
@@ -34,6 +34,9 @@ namespace VotePlatform.ViewModels.Votes
 
         public bool isDynamicResultAccessible;
         public string urlToDynamic;
+
+        public bool isCancellationPossible = false;
+        public string cancelUrl = string.Empty;
 
         public MainVote(VoteMainResponse response)
         {
@@ -52,7 +55,7 @@ namespace VotePlatform.ViewModels.Votes
             else { timeActiveToVote = (response.CreatingDateTime + response.Attributes.TimeActiveToVote).ToLongDateString(); }
 
             isAnonimousVote = response.Attributes.IsAnonimousVote ? "анонимное голосование" : string.Empty;
-            isVoiceCancellationPossible = response.Attributes.IsAnonimousVote ? string.Empty : "переголосовать нельзя";
+            isVoiceCancellationPossibleStr = response.Attributes.IsAnonimousVote ? string.Empty : "переголосовать нельзя";
             isExtendPossible = response.Attributes.IsExtendPossible ? "возможно продление" : string.Empty;
             resultsOnlyAfterCompletion = response.ResultAttributes.ResultsOnlyAfterCompletion ? "результаты по окончании" : string.Empty;
 
@@ -87,7 +90,7 @@ namespace VotePlatform.ViewModels.Votes
             isDynamicResultAccessible =response.IsDynamicResultAccessible;
             urlToDynamic = string.Empty;
 
-            attributesStr = $"{minRoleToVoting} {timeActiveToVote} {isAnonimousVote} {isVoiceCancellationPossible} {isExtendPossible} {resultsOnlyAfterCompletion}";
+            attributesStr = $"{minRoleToVoting} {timeActiveToVote} {isAnonimousVote} {isVoiceCancellationPossibleStr} {isExtendPossible} {resultsOnlyAfterCompletion}";
         }
     }
 }
