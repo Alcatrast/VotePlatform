@@ -10,14 +10,15 @@
     //Model.isVotingAccessible = true;
     //Model.isActualResultAccessible = true;
     //Model.isDynamicResultAccessible = true;
+    //Model.isCancellationPossible = false;
     bool isAnonimousVote = false;
 }
 @*.............*@
 
 @*хуеверть эти данные для того чтобы менять результаты голосования, количество цифр должно совпадать с количеством ответов в голосовании (Model.answersMetas.Count) иначе краш*@
 @{
-    //Model.userVoice = new List<int>() { 0, 0, 1, 0 };
-    //Model.simpleResults = new List<int>() { 5, 10, 100, 500 };
+    //Model.userVoice = new List<int> (){0,0,1,0};
+    //Model.simpleResults =  new List<int> (){5,10,100,500};
 }
 @*.............*@
 
@@ -65,7 +66,7 @@
                 }
 
                 //отображение текущего голоса пользователя, смотрящего страницу
-                if (Model.userVoice[0] > 0)
+                if (Model.userVoice[i] > 0)
                 {
                     if (Model.type == VoteType.PreferVote)
                     {
@@ -101,24 +102,32 @@
                     <h6> </h6>
                 }
             }
-
-
         }
     </div>
     @{
         //кнопка отправки голоса
-        if (Model.isVotingAccessible)
+        if (Model.isVotingAccessible && Model.isCancellationPossible == false)
         {
             <div>
                 <input type="submit" value="Проголосовать" />
             </div>
         }
-        if (Model.isDynamicResultAccessible)
-        {
-            <a href=@Model.urlToDynamic target="_blank">Показать динамику</a>
-        }
     }
-</form>
 
+</form>
+@{
+    //кнопка для отмены голоса лол
+    if (Model.isVotingAccessible && Model.isCancellationPossible == true)
+    {
+        <div>
+            <a href=@Model.cancelUrl>Отменить голос</a>
+        </div>
+    }
+    //переход на страницу с динамикой
+    if (Model.isDynamicResultAccessible)
+    {
+        <a href=@Model.urlToDynamic target="_blank">Показать динамику</a>
+    }
+}
 
 

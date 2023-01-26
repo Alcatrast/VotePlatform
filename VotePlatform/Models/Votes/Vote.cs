@@ -41,6 +41,10 @@ namespace VotePlatform.Models.Votes
         {
             if (IsVotingAccessible(userId)) { return false; }
             bool voiceAlreadyExist = IsVoiceAlreadyExist(userId);
+
+            List<int> voice = new List<int>();
+            for(int i = 0; i < AnswersMetas.Count; i++) { voice.Add(0); }
+
             if (voiceAlreadyExist)
             {
                 if (Attibutes.IsVoiceCancellationPossible == false) { return false; }
@@ -49,25 +53,26 @@ namespace VotePlatform.Models.Votes
             }
             else
             {
+                if (choice.Count != AnswersMetas.Count) {  return false; }
                 if (Type == VoteType.AloneAswer)
                 {
-                    if (choice.Count != 1) return false;
+                    for(int i = 0; i < choice.Count; i++) { if (choice[i] != 0) { voice[i] = 1; break; } }
                 }
                 else if (Type == VoteType.SomeAnswers)
                 {
-                    if (choice.Count > AnswersMetas.Count) return false;
+                    for (int i = 0; i < choice.Count; i++) { if (choice[i] != 0) { voice[i] = 1; } }
                 }
                 else if (Type == VoteType.PreferVote)
                 {
-                    if (choice.Count != AnswersMetas.Count - 1) return false;
-                }
-
-                foreach (int index in choice)
-                {
-                    if ((index >= 0 && index < AnswersMetas.Count) == false) return false;
+                    var checker = new List<int>();
+                    for(int i = 0; i < choice.Count; i++) { if (checker.Contains(choice[i])) { return false; }; }
+                    Dictionary<int,int> keyValuePairs= new Dictionary<int,int>();
+                    for(int i = 0; i < choice.Count; i++) { keyValuePairs.Add(choice[i], i); }
+                    choice.Sort();
+                    for(int i = 0; i < choice.Count; i++) { voice[keyValuePairs[choice[i]]] = i; }
                 }
             }
-            AddVoice(userId, choice);
+            AddVoice(userId, voice);
             if (voiceAlreadyExist == false) { CountVoters++; } else { CountVoters--; }
             return true;
         }
@@ -113,6 +118,12 @@ namespace VotePlatform.Models.Votes
         {
             if (Attibutes.IsAlwaysActiveToVote) return true;
             else if (CreatingDateTime + Attibutes.TimeActiveToVote > CurrentDateTime()) return true; else return false;
+        }
+        public bool IsCancellationPossible(string userId) 
+        {
+            if(Attibutes.IsVoiceCancellationPossible== false) return false;
+            if (IsVoiceAlreadyExist(userId)) { return false; }
+            return true;
         }
         private static DateTime CurrentDateTime() { return DateTime.Now; }
         public bool Extend(string userId, DateTime newDateTime)

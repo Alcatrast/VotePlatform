@@ -9,12 +9,12 @@ namespace VotePlatform.Models.Votes.Serializable
     public class SVoiceV1
     {
         public string UserId = string.Empty;
-        public List<int> AnswerIndexes = new List<int>();
+        public List<int> Answer = new List<int>();
         public DateTime VoteTime = new DateTime();
         public SVoiceV1(Voice voice)
         {
             UserId = voice.UserId;
-            AnswerIndexes = voice.AnswerIndexes;
+            Answer = voice.Answer;
             VoteTime = voice.VoteTime;
         }
         public SVoiceV1() { }

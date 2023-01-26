@@ -35,8 +35,8 @@ namespace VotePlatform.ViewModels.Votes
         public bool isDynamicResultAccessible;
         public string urlToDynamic;
 
-        public bool isCancellationPossible = false;
-        public string cancelUrl = string.Empty;
+        public bool isCancellationPossible;
+        public string cancelUrl;
 
         public MainVote(VoteMainResponse response)
         {
@@ -65,32 +65,18 @@ namespace VotePlatform.ViewModels.Votes
 
             userVoice = response.UrerVoice;
 
-            //if (response.UrerVoice.Count > 0)
-            //{
-            //    if (response.Type == VoteType.PreferVote)
-            //    {
-            //        for (int i = 0; i < response.UrerVoice.Count; i++)
-            //        {
-            //            userVoice[response.UrerVoice[i]] = response.UrerVoice.Count - 1 - i;
-            //        }
-            //    }
-            //    else
-            //    {
-            //        for (int i = 0; i < response.UrerVoice.Count; i++)
-            //        {
-            //            userVoice[response.UrerVoice[i]] = 1;
-            //        }
-            //    }
-            //}
 
             isActualResultAccessible = response.IsActualResultAccessible;
             countVoters = response.CountVoters;
             simpleResults = response.SimpleResults;
 
             isDynamicResultAccessible =response.IsDynamicResultAccessible;
-            urlToDynamic = string.Empty;
+            urlToDynamic = string.Empty;//////////////////////////////////////////////////
 
-            attributesStr = $"{minRoleToVoting} {timeActiveToVote} {isAnonimousVote} {isVoiceCancellationPossibleStr} {isExtendPossible} {resultsOnlyAfterCompletion}";
+            isCancellationPossible = response.IsCancellationAccessible;
+            cancelUrl = string.Empty;/////////////////////////////////////////////////////
+
+        attributesStr = $"{minRoleToVoting} {timeActiveToVote} {isAnonimousVote} {isVoiceCancellationPossibleStr} {isExtendPossible} {resultsOnlyAfterCompletion}";
         }
     }
 }

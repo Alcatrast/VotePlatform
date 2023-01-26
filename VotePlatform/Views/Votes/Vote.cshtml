@@ -2,23 +2,24 @@
 @using System;
 @using System.Collections.Generic;
 @model MainVote
+@{bool isAnonimousVote = Model.attributes.IsAnonimousVote;}
 
 @*хуеверть эти данные для разработки разных сценариев*@
 @{
-    Model.isAvailable = true;
-    Model.type = VoteType.PreferVote;
-    Model.isVotingAccessible = true;
-    Model.isActualResultAccessible = true;
-    Model.isDynamicResultAccessible = true;
-    bool isAnonimousVote = false;
-    Model.isCancellationPossible = false;
+    //isAnonimousVote = false;
+    //Model.isAvailable = true;
+    //Model.type = VoteType.PreferVote;
+    //Model.isVotingAccessible = true;
+    //Model.isActualResultAccessible = true;
+    //Model.isDynamicResultAccessible = true;
+    //Model.isCancellationPossible = false;
 }
 @*.............*@
 
 @*хуеверть эти данные для того чтобы менять результаты голосования, количество цифр должно совпадать с количеством ответов в голосовании (Model.answersMetas.Count) иначе краш*@
 @{
-    Model.userVoice = new List<int> (){0,0,1,0};
-    Model.simpleResults =  new List<int> (){5,10,100,500};
+    //Model.userVoice = new List<int> (){0,0,1,0};
+    //Model.simpleResults =  new List<int> (){5,10,100,500};
 }
 @*.............*@
 
