@@ -119,12 +119,6 @@ namespace VotePlatform.Models.Votes
             if (Attibutes.IsAlwaysActiveToVote) return true;
             else if (CreatingDateTime + Attibutes.TimeActiveToVote > CurrentDateTime()) return true; else return false;
         }
-        public bool IsCancellationPossible(string userId) 
-        {
-            if(Attibutes.IsVoiceCancellationPossible== false) return false;
-            if (IsVoiceAlreadyExist(userId)) { return false; }
-            return true;
-        }
         private static DateTime CurrentDateTime() { return DateTime.Now; }
         public bool Extend(string userId, DateTime newDateTime)
         {
@@ -161,6 +155,12 @@ namespace VotePlatform.Models.Votes
             if (IsAccessAllowed(userId, Attibutes.MinRoleToVoting) == false || UsersDataBaseAPI.FindById(userId, out User user) == false) { return false; }
             if ((sbyte)user.Role <= (sbyte)RoleInPlatform.Passerby) { return false; }
             if(Attibutes.IsVoiceCancellationPossible== false) { if (IsVoiceAlreadyExist(userId)) { return false; }; }
+            return true;
+        }
+        public bool IsCancellationPossible(string userId)
+        {
+            if (Attibutes.IsVoiceCancellationPossible == false) return false;
+            if (IsVoiceAlreadyExist(userId)==false) { return false; }
             return true;
         }
     }
