@@ -1,5 +1,4 @@
-﻿using Azure;
-using System;
+﻿using System;
 using System.Collections.Generic;
 
 namespace VotePlatform.Models.Votes
@@ -20,6 +19,7 @@ namespace VotePlatform.Models.Votes
         public List<int> SimpleResults { get; }
 
         public bool IsVotingAccessible { get; }
+        public bool IsCancellationAccessible { get; }
 
         public bool IsActualResultAccessible { get; }
         public bool IsDynamicResultAccessible { get; }
@@ -39,6 +39,7 @@ namespace VotePlatform.Models.Votes
             UrerVoice = GetUserVoice(vote, userId);
             SimpleResults = GetSimpleResults(vote, userId);
             IsVotingAccessible = vote.IsVotingAccessible(userId);
+            IsCancellationAccessible=vote.IsCancellationPossible(userId);
             IsActualResultAccessible = GetIsActualResultAccessible(vote, userId);
             IsDynamicResultAccessible = GetIsDynamicResultAccessible(vote, userId);
         }
@@ -55,19 +56,9 @@ namespace VotePlatform.Models.Votes
                 if (ids.Contains(vote.Voices[i].UserId)) { continue; }
                 else
                 {
-                    if (vote.Voices[i].AnswerIndexes[0] > -1)
+                    for(int gg=0; gg < res.Count; i++)
                     {
-                        for (int index = 0; index < vote.Voices[i].AnswerIndexes.Count; index++)
-                        {
-                            if (Type == VoteType.PreferVote)
-                            {
-                                res[vote.Voices[i].AnswerIndexes[index]] += vote.AnswersMetas.Count - 1 - index;
-                            }
-                            else
-                            {
-                                res[vote.Voices[i].AnswerIndexes[index]]++;
-                            }
-                        }
+                        res[gg] += vote.Voices[i].Answer[gg];
                     }
                     ids.Add(vote.Voices[i].UserId);
                 }
@@ -81,14 +72,14 @@ namespace VotePlatform.Models.Votes
             List<int> res = new List<int>();
             for(int i=0;i<vote.AnswersMetas.Count;i++) { res.Add(0); }
 
-            //for(int i = vote.Voices.Count - 1; i >= 0; i--)
-            //{
-            //    if (vote.Voices[i].UserId == userId)
-            //    {
-            //        res = vote.Voices[i].AnswerIndexes;
-            //        break;
-            //    }
-            //}
+            for (int i = vote.Voices.Count - 1; i >= 0; i--)
+            {
+                if (vote.Voices[i].UserId == userId)
+                {
+                    res = vote.Voices[i].Answer;
+                    break;
+                }
+            }
             return res;
         }
     }
