@@ -2,16 +2,17 @@
 @using System;
 @using System.Collections.Generic;
 @model MainVote
+@{bool isAnonimousVote = Model.attributes.IsAnonimousVote;}
 
 @*хуеверть эти данные для разработки разных сценариев*@
 @{
+    //isAnonimousVote = false;
     //Model.isAvailable = true;
     //Model.type = VoteType.PreferVote;
     //Model.isVotingAccessible = true;
     //Model.isActualResultAccessible = true;
     //Model.isDynamicResultAccessible = true;
-    //Model.isCancellationPossible = false;
-    bool isAnonimousVote = false;
+            //Model.isCancellationPossible = false;
 }
 @*.............*@
 
@@ -21,7 +22,6 @@
     //Model.simpleResults =  new List<int> (){5,10,100,500};
 }
 @*.............*@
-
 @*шапка голосования *@
 @{
     if (Model.isAvailable == false)

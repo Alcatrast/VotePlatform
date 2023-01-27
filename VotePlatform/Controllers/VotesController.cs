@@ -60,10 +60,10 @@ namespace VotePlatform.Controllers
             {
                 if (vote.Voiting(userId, choices))
                 {
+                    System.IO.File.AppendAllLines(path, new List<string>() { "kkk" });////////////////////////
                     VotesDataBaseAPI.Update(vote);
                 }
             }
-            System.IO.File.AppendAllLines(path, new List<string>() { vote.Voices[0].UserId });////////////////////////
             return View(new MainVote(new VoteMainResponse(vote, userId))) ;
         }
         private bool TryParseAnoneChoice(Vote vote, out List<int> choices)

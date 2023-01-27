@@ -39,7 +39,7 @@ namespace VotePlatform.Models.Votes
 
         public bool Voiting(string userId, List<int> choice)
         {
-            if (IsVotingAccessible(userId)) { return false; }
+            if (IsVotingAccessible(userId)==false) { return false; }
             bool voiceAlreadyExist = IsVoiceAlreadyExist(userId);
 
             List<int> voice = new List<int>();

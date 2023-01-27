@@ -16,7 +16,7 @@ namespace VotePlatform.Models.Votes
         public List<VoteMeta> AnswersMetas { get; }
 
         public List<int> UrerVoice { get; }
-        public List<int> SimpleResults { get; }
+        public List<int> SimpleResults { get; private set; }
 
         public bool IsVotingAccessible { get; }
         public bool IsCancellationAccessible { get; }
@@ -47,7 +47,7 @@ namespace VotePlatform.Models.Votes
         {
             List<int> res = new List<int>();
             for(int i=0;i< vote.AnswersMetas.Count; i++) { res.Add(0); }
-            if (IsActualResultAccessible == false || vote.IsAccessAllowed(userId, vote.ResultAttributes.MinRoleToActual) == false) { return res; }
+            if (vote.IsAccessAllowed(userId, vote.ResultAttributes.MinRoleToActual) == false) { return res; }
 
             List<string> ids = new List<string>();
 
@@ -56,7 +56,7 @@ namespace VotePlatform.Models.Votes
                 if (ids.Contains(vote.Voices[i].UserId)) { continue; }
                 else
                 {
-                    for(int gg=0; gg < res.Count; i++)
+                    for(int gg=0; gg < res.Count; gg++)
                     {
                         res[gg] += vote.Voices[i].Answer[gg];
                     }

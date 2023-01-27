@@ -76,7 +76,7 @@ namespace VotePlatform.ViewModels.Votes
             isCancellationPossible = response.IsCancellationAccessible;
             cancelUrl = string.Empty;/////////////////////////////////////////////////////
 
-        attributesStr = $"{minRoleToVoting} {timeActiveToVote} {isAnonimousVote} {isVoiceCancellationPossibleStr} {isExtendPossible} {resultsOnlyAfterCompletion}";
+            attributesStr = $"{minRoleToVoting} {timeActiveToVote} {isAnonimousVote} {isVoiceCancellationPossibleStr} {isExtendPossible} {resultsOnlyAfterCompletion}";
         }
     }
 }
