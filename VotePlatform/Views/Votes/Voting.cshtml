@@ -2,7 +2,9 @@
 @using System;
 @using System.Collections.Generic;
 @model MainVote
-@{bool isAnonimousVote = Model.attributes.IsAnonimousVote;}
+@{
+    bool isAnonimousVote = Model.attributes.IsAnonimousVote;
+}
 
 @*хуеверть эти данные для разработки разных сценариев*@
 @{
@@ -22,6 +24,7 @@
     //Model.simpleResults =  new List<int> (){5,10,100,500};
 }
 @*.............*@
+
 @*шапка голосования *@
 @{
     if (Model.isAvailable == false)
@@ -87,7 +90,7 @@
                 <h2> </h2>
 
                 //отображение актуальных результатов голосования для каждого ответа
-                if (Model.simpleResults[0] != 0)
+                if (Model.simpleResults[i] != 0)
                 {
                     var res = $"{Convert.ToString(Model.simpleResults[i])} голосов.";
 
@@ -106,7 +109,7 @@
     </div>
     @{
         //кнопка отправки голоса
-        if (Model.isVotingAccessible && Model.isCancellationPossible == false)
+        if (Model.isVotingAccessible && (Model.isCancellationPossible == false))
         {
             <div>
                 <input type="submit" value="Проголосовать" />

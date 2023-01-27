@@ -60,7 +60,6 @@ namespace VotePlatform.Controllers
             {
                 if (vote.Voiting(userId, choices))
                 {
-                    System.IO.File.AppendAllLines(path, new List<string>() { "kkk" });////////////////////////
                     VotesDataBaseAPI.Update(vote);
                 }
             }
