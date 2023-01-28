@@ -2,81 +2,60 @@
 @using System;
 @using System.Collections.Generic;
 @model MainVote
-
-@*меняй эти данные для разработки разных сценариев*@
 @{
-    //    Model.isAvailable = true;
-    //    Model.type = VoteType.PreferVote;
-    //    Model.isVotingAccessible = true;
-    //    Model.isActualResultAccessible = true;
-    //    Model.isDynamicResultAccessible = true;
-    bool isAnonimousVote = false;
+    bool isAnonimousVote = Model.attributes.IsAnonimousVote;
+}
+
+@*хуеверть эти данные для разработки разных сценариев*@
+@{
+    //isAnonimousVote = true;
+    //Model.isAvailable = true;
+    //Model.type = VoteType.PreferVote;
+    //Model.isVotingAccessible = true;
+    //Model.isActualResultAccessible = true;
+    //Model.isDynamicResultAccessible = true;
+    //Model.isCancellationPossible = false;
 }
 @*.............*@
 
-@*меняй эти данные для того чтобы менять результаты голосования, количество цифр должно совпадать с количеством ответов в голосовании (Model.answersMetas.Count) иначе краш*@
+@*хуеверть эти данные для того чтобы менять результаты голосования, количество цифр должно совпадать с количеством ответов в голосовании (Model.answersMetas.Count) иначе краш*@
 @{
-    //Model.userVoice = new List<int>() { 0, 0, 1, 0 };
-    //Model.simpleResults = new List<int>() { 5, 10, 100, 500 };
+    //Model.userVoice = new List<int> (){0,0,1,0};
+    //Model.simpleResults =  new List<int> (){5,10,100,500};
 }
 @*.............*@
 
-<body class="fon">
-    <nav class="navbar navbar-dark bg-dark navbar-expand-lg">
-        <div class="container">
-            <a class="navbar-brand p-0" href="/">
-                <img src="..." alt="Фотку крутую поставить" width="120" />
-            </a>
-            <button class="navbar-toggler"
-                    type="button"
-                    data-bs-toggle="collapse"
-                    data-bs-target="#navbarNav"
-                    aria-controls="navbarNav"
-                    aria-expanded="false"
-                    aria-label="Toggle navigation">
-                <span class="navbar-toggler-icon"></span>
-            </button>
-            <div class="collapse navbar-collapse" id="navbarNav">
-                <ul class="navbar-nav">
-                    @*<li class="nav-item">
-                    <a class="nav-link" aria-current="page" href="/">Home</a>
-                    </li>
-                    <li class="nav-item active">
-                    <a class="nav-link" href="Video.html">Video</a>
-                    </li>*@
-                </ul>
-            </div>
-        </div>
-    </nav>
-
-    <div class="container my-5">
-        <div class="row row-cols-1 row-cols-md-1 row-cols-lg-1 g-1">
-            <div class="col">
-                @*шапка голосования *@
-                @{
-                    if (Model.isAvailable == false)
-                    {
-                        <h1>Голосование удалено.</h1>
-                    }
-
-                    if (Model.meta.IsPinned)
-                    {
-                        <h3>Закреплено.</h3>
-                    }
+<div class="container my-5">
+    <div class="row row-cols-1 row-cols-md-1 row-cols-lg-1 g-1">
+        <div class="col">
+            @*шапка голосования *@
+            @{
+                if (Model.isAvailable == false)
+                {
+                    <h1>Голосование удалено.</h1>
                 }
-                <a>Голосовавших: @Model.countVoters</a>
-                <p>@Model.attributesStr</p>
-                <p>@Model.meta.Header</p>
-                <p>@Model.meta.Description</p>
+
+                if (Model.meta.IsPinned)
+                {
+                    <h3>Закреплено.</h3>
+                }
+            }
+            <a>Голосовавших: @Model.countVoters</a>
+            <p>@Model.attributesStr</p>
+            <p>@Model.meta.Header</p>
+            <p>@Model.meta.Description</p>
 
 
-                @*форма с ответами*@
-                <form action="/Votes/Voting?id=o1-v1" method="post">
-                    <div>
-                        @{
-                            for (int i = 0; i < Model.answersMetas.Count; i++)
+            @*форма с ответами*@
+            <form action="/Votes/Voting?id=o1-v3" method="post">
+                <div>
+                    @{
+                        for (int i = 0; i < Model.answersMetas.Count; i++)
+                        {
+                            //отображение текущего голоса пользователя, смотрящего страницу
+                            if (Model.userVoice[i] > 0)
                             {
-                                <div class="card my-2">
+                                <div class="card card-voice my-4">
                                     @{
                                         var idRes = $"{Convert.ToString(i)}";
 
@@ -97,18 +76,6 @@
                                             }
                                         }
 
-                                        //отображение текущего голоса пользователя, смотрящего страницу
-                                        if (Model.userVoice[0] > 0)
-                                        {
-                                            if (Model.type == VoteType.PreferVote)
-                                            {
-                                                <a class="btn">Предпочтение: @Model.userVoice[i]</a>
-                                            }
-                                            else
-                                            {
-                                                <a class="btn">Я выбрал это.</a>
-                                            }
-                                        }
                                         //само тело варианта ответа
                                         <label for=@idRes> @Model.answersMetas[i].Header</label>
 
@@ -116,7 +83,52 @@
 
                                         <label for=@idRes> @Model.answersMetas[i].Description</label>
 
+                                        //отображение актуальных результатов голосования для каждого ответа
+                                        if (Model.simpleResults[0] != 0)
+                                        {
+                                            var res = $"{Convert.ToString(Model.simpleResults[i])} голосов.";
+
+                                            if (isAnonimousVote)
+                                            {
+                                                <label>@res</label>
+                                            }
+                                            else
+                                            {
+                                                <a class="btn btn-secondary btn-sled pos" href="/Votes/Vote?id =o1-v1" target="_blank">@res</a>
+                                            }
+                                        }
+                                    }
+                                </div>
+                            }
+                            else
+                            {
+                                <div class="card my-4">
+                                    @{
+                                        var idRes = $"{Convert.ToString(i)}";
+
+                                        //в зависимости от типа голосования берутся разные inputы
+                                        if (Model.isVotingAccessible)
+                                        {
+                                            if (Model.type == VoteType.AloneAswer)
+                                            {
+                                                <input type="radio" id=@idRes name="vote" value=@idRes>
+                                            }
+                                            else if (Model.type == VoteType.SomeAnswers)
+                                            {
+                                                <input type="checkbox" id=@idRes name=@idRes value="100">
+                                            }
+                                            else if (Model.type == VoteType.PreferVote)
+                                            {
+                                                <input type="number" id=@idRes name=@idRes>
+                                            }
+                                        }
+
+                                        //само тело варианта ответа
+                                        <label for=@idRes> @Model.answersMetas[i].Header</label>
+
                                         <h2> </h2>
+
+                                        <label for=@idRes> @Model.answersMetas[i].Description</label>
 
                                         //отображение актуальных результатов голосования для каждого ответа
                                         if (Model.simpleResults[i] != 0)
@@ -129,30 +141,40 @@
                                             }
                                             else
                                             {
-                                                <a href="/Votes/Vote?id =o1-v1" target="_blank">@res</a>
+                                                <a class="btn btn-secondary btn-sled pos" href="/Votes/Vote?id =o1-v1" target="_blank">@res</a>
                                             }
-                                            <h6> </h6>
                                         }
                                     }
                                 </div>
                             }
-                        }
-                    </div>
-                    @{
-                        //кнопка отправки голоса
-                        if (Model.isVotingAccessible)
-                        {
-                            <div>
-                                <input type="submit" value="Проголосовать" />
-                            </div>
-                        }
-                        if (Model.isDynamicResultAccessible)
-                        {
-                            <a class="btn btn-primary" href=@Model.urlToDynamic target="_blank">Показать динамику</a>
+
                         }
                     }
-                </form>
-            </div>
+                </div>
+                @{
+                    //кнопка отправки голоса
+                    if (Model.isVotingAccessible && (Model.isCancellationPossible == false))
+                    {
+                        <div>
+                            <input class="btn btn-primary" type="submit" value="Проголосовать" />
+                        </div>
+                    }
+                }
+            </form>
+            @{
+                //кнопка для отмены голоса лол
+                if (Model.isVotingAccessible && Model.isCancellationPossible == true)
+                {
+                    <div>
+                        <a class="btn btn-primary" href=@Model.cancelUrl>Отменить голос</a>
+                    </div>
+                }
+                //переход на страницу с динамикой
+                if (Model.isDynamicResultAccessible)
+                {
+                    <a class="btn btn-primary positioned my-4 btn-sled" href=@Model.urlToDynamic target="_blank">Показать динамику</a>
+                }
+            }
         </div>
     </div>
-</body>
+</div>
