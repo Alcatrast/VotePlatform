@@ -21,7 +21,7 @@ namespace VotePlatform.ViewModels.Votes
         public string isExtendPossibleStr;
         public string resultsOnlyAfterCompletionStr;
 
-        public string attributesStr;
+        public string AttributesStr { get { return $"{minRoleToVoting} {timeActiveToVote} {isAnonimousVote} {isVoiceCancellationPossibleStr} {isExtendPossible} {resultsOnlyAfterCompletion}"; } }
 
         public bool isVotingAccessible;
 
