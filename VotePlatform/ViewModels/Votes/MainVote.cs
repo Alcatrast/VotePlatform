@@ -14,12 +14,12 @@ namespace VotePlatform.ViewModels.Votes
         public string creatingDateTime;
         public VoteType type;
         public string typeStr;
-        public string minRoleToVoting;
-        public string timeActiveToVote;
-        public string isAnonimousVote;
+        public string minRoleToVotingStr;
+        public string timeActiveToVoteStr;
+        public string isAnonimousVoteStr;
         public string isVoiceCancellationPossibleStr;
-        public string isExtendPossible;
-        public string resultsOnlyAfterCompletion;
+        public string isExtendPossibleStr;
+        public string resultsOnlyAfterCompletionStr;
 
         public string attributesStr;
 
@@ -37,6 +37,8 @@ namespace VotePlatform.ViewModels.Votes
 
         public bool isCancellationPossible;
         public string cancelUrl;
+        public string urlToVoting;
+        public string urlToVoters;
 
         public MainVote(VoteMainResponse response)
         {
@@ -49,15 +51,15 @@ namespace VotePlatform.ViewModels.Votes
             if (response.Type == VoteType.SomeAnswers) { typeStr = "несколько вариантов"; }
             if (response.Type == VoteType.PreferVote) { typeStr = "предпочтение"; }
 
-            if (response.Attributes.MinRoleToVoting >= RoleInOrganization.Audience) { minRoleToVoting = "частное голосование"; } else { minRoleToVoting = string.Empty; }
+            if (response.Attributes.MinRoleToVoting >= RoleInOrganization.Audience) { minRoleToVotingStr = "частное голосование"; } else { minRoleToVotingStr = string.Empty; }
 
-            if (response.Attributes.IsAlwaysActiveToVote) { timeActiveToVote = ""; }
-            else { timeActiveToVote = (response.CreatingDateTime + response.Attributes.TimeActiveToVote).ToLongDateString(); }
+            if (response.Attributes.IsAlwaysActiveToVote) { timeActiveToVoteStr = ""; }
+            else { timeActiveToVoteStr = (response.CreatingDateTime + response.Attributes.TimeActiveToVote).ToLongDateString(); }
 
-            isAnonimousVote = response.Attributes.IsAnonimousVote ? "анонимное голосование" : string.Empty;
+            isAnonimousVoteStr = response.Attributes.IsAnonimousVote ? "анонимное голосование" : string.Empty;
             isVoiceCancellationPossibleStr = response.Attributes.IsAnonimousVote ? string.Empty : "переголосовать нельзя";
-            isExtendPossible = response.Attributes.IsExtendPossible ? "возможно продление" : string.Empty;
-            resultsOnlyAfterCompletion = response.ResultAttributes.ResultsOnlyAfterCompletion ? "результаты по окончании" : string.Empty;
+            isExtendPossibleStr = response.Attributes.IsExtendPossible ? "возможно продление" : string.Empty;
+            resultsOnlyAfterCompletionStr = response.ResultAttributes.ResultsOnlyAfterCompletion ? "результаты по окончании" : string.Empty;
 
             isVotingAccessible = response.IsVotingAccessible;
 
@@ -71,12 +73,13 @@ namespace VotePlatform.ViewModels.Votes
             simpleResults = response.SimpleResults;
 
             isDynamicResultAccessible =response.IsDynamicResultAccessible;
-            urlToDynamic = string.Empty;//////////////////////////////////////////////////
-
             isCancellationPossible = response.IsCancellationAccessible;
-            cancelUrl = string.Empty;/////////////////////////////////////////////////////
+            urlToVoting= @$"{VRoutes.Controller}{VRoutes.AVoting}?id={response.Id.Id}";
+            urlToDynamic = @$"{VRoutes.Controller}{VRoutes.ADynamicView}?id={response.Id.Id}";
+            urlToVoters= @$"{VRoutes.Controller}{VRoutes.AVoters}?id={response.Id.Id}&=";
+            cancelUrl = $@"{VRoutes.Controller}{VRoutes.AVoting}?id={response.Id.Id}&{VRoutes.PCancell}={VRoutes.PVCancel}";
 
-            attributesStr = $"{minRoleToVoting} {timeActiveToVote} {isAnonimousVote} {isVoiceCancellationPossibleStr} {isExtendPossible} {resultsOnlyAfterCompletion}";
+            attributesStr = $"{minRoleToVotingStr} {timeActiveToVoteStr} {isAnonimousVoteStr} {isVoiceCancellationPossibleStr} {isExtendPossibleStr} {resultsOnlyAfterCompletionStr}";
         }
     }
 }

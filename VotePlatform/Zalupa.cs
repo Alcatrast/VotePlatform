@@ -69,7 +69,7 @@ namespace VotePlatform
             OrganizationsDataBaseAPI.Initialize(ConnectionString);
             VotesDataBaseAPI.Initialize(ConnectionString);
         }
-        public static void SAV()
+        private static void SAV()
         {
             VotesDataBaseAPI.Create("u4", "o1", VoteType.AloneAswer,
                new VoteAttributes(new TimeSpan(), false, true, false, false, RoleInOrganization.Passerby),
@@ -92,7 +92,7 @@ namespace VotePlatform
             Console.WriteLine("Votes added");
 
             VotesDataBaseAPI.Create("u4", "o1", VoteType.PreferVote,
-              new VoteAttributes(new TimeSpan(), false, true, false, false, RoleInOrganization.Passerby),
+              new VoteAttributes(new TimeSpan(), false, true, false, true, RoleInOrganization.Passerby),
               new VoteResultAttributes(false, RoleInOrganization.Passerby, RoleInOrganization.Passerby),
               new VoteMeta("Prefer Vote", "This vote exist for debug."),
               new List<VoteMeta>(){
