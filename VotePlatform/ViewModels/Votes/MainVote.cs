@@ -21,7 +21,7 @@ namespace VotePlatform.ViewModels.Votes
         public string isExtendPossible;
         public string resultsOnlyAfterCompletion;
 
-        public string attributesStr;
+        public string AttributesStr { get { return $"{minRoleToVoting} {timeActiveToVote} {isAnonimousVote} {isVoiceCancellationPossibleStr} {isExtendPossible} {resultsOnlyAfterCompletion}"; } }
 
         public bool isVotingAccessible;
 
@@ -76,7 +76,7 @@ namespace VotePlatform.ViewModels.Votes
             isCancellationPossible = response.IsCancellationAccessible;
             cancelUrl = string.Empty;/////////////////////////////////////////////////////
 
-            attributesStr = $"{minRoleToVoting} {timeActiveToVote} {isAnonimousVote} {isVoiceCancellationPossibleStr} {isExtendPossible} {resultsOnlyAfterCompletion}";
+            ;
         }
     }
 }

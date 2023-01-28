@@ -65,7 +65,7 @@ namespace VotePlatform.Models.Votes
                 else if (Type == VoteType.PreferVote)
                 {
                     var checker = new List<int>();
-                    for(int i = 0; i < choice.Count; i++) { if (checker.Contains(choice[i])) { return false; }; }
+                    for(int i = 0; i < choice.Count; i++) { if (checker.Contains(choice[i])) { return false; } checker.Add(choice[i]) ; }
                     Dictionary<int,int> keyValuePairs= new Dictionary<int,int>();
                     for(int i = 0; i < choice.Count; i++) { keyValuePairs.Add(choice[i], i); }
                     choice.Sort();
