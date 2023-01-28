@@ -142,7 +142,8 @@
                                             }
                                             else
                                             {
-                                                <a class="btn btn-secondary btn-sled pos" href="/Votes/Vote?id =o1-v1" target="_blank">@res</a>
+                                                var votersRef = $"{Model.urlToVoters}{idRes}";
+                                                <a class="btn btn-secondary btn-sled pos" href=@votersRef target="_blank">@res</a>
                                             }
                                         }
                                     }

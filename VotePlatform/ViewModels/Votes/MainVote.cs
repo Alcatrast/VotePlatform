@@ -21,7 +21,7 @@ namespace VotePlatform.ViewModels.Votes
         public string isExtendPossibleStr;
         public string resultsOnlyAfterCompletionStr;
 
-        public string AttributesStr { get { return $"{minRoleToVoting} {timeActiveToVote} {isAnonimousVote} {isVoiceCancellationPossibleStr} {isExtendPossible} {resultsOnlyAfterCompletion}"; } }
+        public string AttributesStr { get { return $"{minRoleToVotingStr} {timeActiveToVoteStr} {isAnonimousVoteStr} {isVoiceCancellationPossibleStr} {isExtendPossibleStr} {resultsOnlyAfterCompletionStr}"; } }
 
         public bool isVotingAccessible;
 
@@ -78,8 +78,6 @@ namespace VotePlatform.ViewModels.Votes
             urlToDynamic = @$"{VRoutes.Controller}{VRoutes.ADynamicView}?id={response.Id.Id}";
             urlToVoters= @$"{VRoutes.Controller}{VRoutes.AVoters}?id={response.Id.Id}&=";
             cancelUrl = $@"{VRoutes.Controller}{VRoutes.AVoting}?id={response.Id.Id}&{VRoutes.PCancell}={VRoutes.PVCancel}";
-
-            attributesStr = $"{minRoleToVotingStr} {timeActiveToVoteStr} {isAnonimousVoteStr} {isVoiceCancellationPossibleStr} {isExtendPossibleStr} {resultsOnlyAfterCompletionStr}";
         }
     }
 }

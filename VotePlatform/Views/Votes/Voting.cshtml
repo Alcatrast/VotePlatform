@@ -47,7 +47,7 @@
 
 
             @*форма с ответами*@
-            <form action="/Votes/Voting?id=o1-v3" method="post">
+            <form action=@Model.urlToVoting method="post">
                 <div>
                     @{
                         for (int i = 0; i < Model.answersMetas.Count; i++)
@@ -94,7 +94,8 @@
                                             }
                                             else
                                             {
-                                                <a class="btn btn-secondary btn-sled pos" href="/Votes/Vote?id =o1-v1" target="_blank">@res</a>
+                                                var votersRef = $"{Model.urlToVoters}{idRes}";
+                                                <a class="btn btn-secondary btn-sled pos" href=@votersRef target="_blank">@res</a>
                                             }
                                         }
                                     }
@@ -141,7 +142,8 @@
                                             }
                                             else
                                             {
-                                                <a class="btn btn-secondary btn-sled pos" href="/Votes/Vote?id =o1-v1" target="_blank">@res</a>
+                                                var votersRef = $"{Model.urlToVoters}{idRes}";
+                                                <a class="btn btn-secondary btn-sled pos" href=@votersRef target="_blank">@res</a>
                                             }
                                         }
                                     }
