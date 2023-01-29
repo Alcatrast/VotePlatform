@@ -1,0 +1,14 @@
+﻿@using System.Collections.Generic;
+@model MainVoters
+@{
+    for(int i=0;i<Model.voters.Count;i++)
+    {
+        string weight = string.Empty;
+        if (Model.values.Count != 0) { weight = Convert.ToString(Model.values[i]); }
+        string userView = @$"{weight}  {Model.voters[i].name} {Model.voters[i].nick}";
+       
+        <div class="card my-4">
+            <a href=@Model.voters[i].url>@userView</a>
+        </div>
+    }
+}

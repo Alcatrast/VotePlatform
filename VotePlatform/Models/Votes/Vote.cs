@@ -109,10 +109,10 @@ namespace VotePlatform.Models.Votes
 
         public bool IsAccessAllowed(string userId, RoleInOrganization minRole)
         {
-            if (Attibutes.MinRoleToVoting == RoleInOrganization.Passerby) { return true; }
-            if (OrganizationsDataBaseAPI.FindById(Id.OwnerGroupId, out Organization owner) == false) { return false; }
-            if (owner.IsDeleted) { return false; }
-            return owner.GetRoleInOrganization(userId) >= minRole;
+                if (Attibutes.MinRoleToVoting == RoleInOrganization.Passerby) { return true; }
+                if (OrganizationsDataBaseAPI.FindById(Id.OwnerGroupId, out Organization owner) == false) { return false; }
+                if (owner.IsDeleted) { return false; }
+                return owner.GetRoleInOrganization(userId) >= minRole;
         }
         private bool IsAvaliableTimeToVote()
         {

@@ -2,12 +2,11 @@
 {
     public static class VRoutes
     {
-        public const string Host = @"https://localhost:44313/Votes/Vote?id%20=o1-v1";
+        public const string Host = @"https://localhost:44313";
         public const string Controller = @"/Votes";
         public const string AVoting = @"/Voting";
         public const string ADynamicView = @"/Dynamic";
-        public const string AVoters = @"/Voicers";
-        public const string PCancell = @"cancel";
+        public const string AVoters = @"/Voters";
         public const string PVCancel = @"CANCEL";
         public const string PAnswerIndex = @"answer";
     }

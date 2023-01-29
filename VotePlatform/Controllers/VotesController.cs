@@ -7,8 +7,12 @@ using System.Collections.Generic;
 using System.IO;
 using System.Threading.Tasks;
 using VotePlatform.Models.DataBaseAPI;
+using VotePlatform.Models.Users;
+using VotePlatform.Models.Users.Responses;
 using VotePlatform.Models.Votes;
+using VotePlatform.Models.Votes.Responses;
 using VotePlatform.Models.Votes.Serializable;
+using VotePlatform.ViewModels.Users;
 using VotePlatform.ViewModels.Votes;
 
 namespace VotePlatform.Controllers
@@ -68,6 +72,25 @@ namespace VotePlatform.Controllers
             return View(new MainVote(new VoteMainResponse(vote, userId))) ;
         }
 
+        public ViewResult Voters(string id, string answer)
+        {
+            string userId = "u1";
+
+            var vId = new VoteId(id);
+            if (VotesDataBaseAPI.FindById(vId, out Vote vote) == false) { View(new MainVoters(new List<DemoUser>(), new List<int>())); }
+            if (int.TryParse(answer, out int answerNum) == false) { View(new MainVoters(new List<DemoUser>(), new List<int>())); }
+            if (answerNum < 0 || answerNum >= vote.AnswersMetas.Count) { View(new MainVoters(new List<DemoUser>(), new List<int>())); };
+
+            var response= new VotersResponse(vote, answerNum, userId);
+            List<DemoUser> voters = new List<DemoUser>();
+            foreach(var uvid in response.UsersIds)
+            {
+                UsersDataBaseAPI.FindById(uvid, out User user);
+                voters.Add(new DemoUser(new UserDemoResponse(user)));
+            }
+            return View(new MainVoters(voters, response.Weights));
+
+        }
 
         private bool TryParseAnoneChoice(Vote vote, out List<int> choices)
         {
