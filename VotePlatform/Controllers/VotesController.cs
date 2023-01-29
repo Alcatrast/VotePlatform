@@ -16,23 +16,8 @@ namespace VotePlatform.Controllers
     public class VotesController : Controller
     {
         public string path = @"C:\temp\bb.txt";
-        //[HttpGet]
-        public async Task<ViewResult> Vote(string id)
-        {
-            ViewBag.Title = "АБОБАААА";
-            var r = Request.Headers;
-            VoteId vId= new VoteId(id);
-            VotesDataBaseAPI.FindById(vId,out Vote vote);
-            var userId = "u1";
-            string bodyStr = string.Empty;
-            
 
-
-            return View(new MainVote(new VoteMainResponse(vote, userId))) ;
-        }
-
-        //[HttpPost]
-        public async Task<ViewResult> Voting(string id)
+        public ViewResult Voting(string id, string cancel)
         {
             ViewBag.Title = "АБОБАААА";
 
@@ -40,31 +25,50 @@ namespace VotePlatform.Controllers
             VotesDataBaseAPI.FindById(vId, out Vote vote);
             var userId = "u1";
 
-            bool isChoiceParsed = false;
-            List<int> choices= new List<int>();
-
-            if (vote.Type == VoteType.AloneAswer)
+            if (cancel == VRoutes.PVCancel) 
             {
-                isChoiceParsed = TryParseAnoneChoice(vote, out choices);
-            }
-            else if(vote.Type == VoteType.SomeAnswers)
-            {
-                isChoiceParsed = TryParseSomeAnswersChoices(vote, out choices);
-            }
-            else if(vote.Type == VoteType.PreferVote)
-            {
-                isChoiceParsed = TryParsePreferVote(vote, out choices);
-            }
-
-            if (isChoiceParsed)
-            {
-                if (vote.Voiting(userId, choices))
+                if(vote.Voiting(userId, new List<int>() { -1 }))
                 {
                     VotesDataBaseAPI.Update(vote);
                 }
+
             }
+            else
+            {
+
+                try
+                {
+                    bool isChoiceParsed = false;
+                    List<int> choices = new List<int>();
+
+                    if (vote.Type == VoteType.AloneAswer)
+                    {
+                        isChoiceParsed = TryParseAnoneChoice(vote, out choices);
+                    }
+                    else if (vote.Type == VoteType.SomeAnswers)
+                    {
+                        isChoiceParsed = TryParseSomeAnswersChoices(vote, out choices);
+                    }
+                    else if (vote.Type == VoteType.PreferVote)
+                    {
+                        isChoiceParsed = TryParsePreferVote(vote, out choices);
+                    }
+
+                    if (isChoiceParsed)
+                    {
+                        if (vote.Voiting(userId, choices))
+                        {
+                            VotesDataBaseAPI.Update(vote);
+                        }
+                    }
+                }
+                catch { }
+            }
+
             return View(new MainVote(new VoteMainResponse(vote, userId))) ;
         }
+
+
         private bool TryParseAnoneChoice(Vote vote, out List<int> choices)
         {
             choices = new List<int>();

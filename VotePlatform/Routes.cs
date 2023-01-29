@@ -4,7 +4,6 @@
     {
         public const string Host = @"https://localhost:44313/Votes/Vote?id%20=o1-v1";
         public const string Controller = @"/Votes";
-        public const string AVoteView = @"/Vote";
         public const string AVoting = @"/Voting";
         public const string ADynamicView = @"/Dynamic";
         public const string AVoters = @"/Voicers";

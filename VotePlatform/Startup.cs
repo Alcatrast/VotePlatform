@@ -1,4 +1,4 @@
-using Microsoft.AspNetCore.Builder;
+﻿using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.DependencyInjection;
@@ -32,9 +32,8 @@ namespace VotePlatform
             {
                 endpoints.MapControllerRoute(
                     name: "default",
-                    pattern: "{controller=Votes}/{action=Vote}/{id=o1-v3}");
+                    pattern: "{controller=Votes}/{action=Voting}/{id=o1-v3}");
             });
-
             Zalupa.MainZalupa();
         }
     }

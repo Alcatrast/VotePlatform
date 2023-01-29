@@ -72,7 +72,7 @@ namespace VotePlatform
         private static void SAV()
         {
             VotesDataBaseAPI.Create("u4", "o1", VoteType.AloneAswer,
-               new VoteAttributes(new TimeSpan(), false, true, false, false, RoleInOrganization.Passerby),
+               new VoteAttributes(new TimeSpan(), false, true, false, true, RoleInOrganization.Passerby),
                new VoteResultAttributes(false, RoleInOrganization.Passerby, RoleInOrganization.Passerby),
                new VoteMeta("Alone Vote", "This vote exist for debug."),
                new List<VoteMeta>(){ 
@@ -82,7 +82,7 @@ namespace VotePlatform
             Console.WriteLine("Votes added");
 
             VotesDataBaseAPI.Create("u4", "o1", VoteType.SomeAnswers,
-              new VoteAttributes(new TimeSpan(), false, true, false, false, RoleInOrganization.Passerby),
+              new VoteAttributes(new TimeSpan(), false, true, false, true, RoleInOrganization.Passerby),
               new VoteResultAttributes(false, RoleInOrganization.Passerby, RoleInOrganization.Passerby),
               new VoteMeta(" Some Vote", "This vote exist for debug."),
               new List<VoteMeta>(){
@@ -104,7 +104,7 @@ namespace VotePlatform
 
         }
         //,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
-        public static string ConnectionString = CFG.N;
+        public static string ConnectionString = CFG.D;
         //,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
 
         public static void MainZalupa()
@@ -112,8 +112,8 @@ namespace VotePlatform
             Console.WriteLine("Hello, World!");
             
             InitializateDB();
-            StartFilling();
-            SAV();
+            //StartFilling();
+            //SAV();
 
             Console.WriteLine("Startup completed");
 
