@@ -1,0 +1,35 @@
+﻿@model PreprocessorVoteSettings
+<form action="">
+    <input for="mh" type="text" name="mainheader" />
+    <label id="mh">Заголовок:</label>
+    <input type="text" for="md" name="maindescription"/>
+    <label id="md">Описание:</label>
+    @{
+        for(int i = 0; i < Model.CountAnswers; i++)
+        {
+            string answerIdHeader = @$"ah{Convert.ToString(i)}";
+            string answerIdDescription = @$"ad{Convert.ToString(i)}";
+            string answerNameHeader = @$"answerheader_{Convert.ToString(i)}";
+            string answerNameDescription = @$"answerdescription_{Convert.ToString(i)}";
+            string answerViewHeader = @$"Заголовок {Convert.ToString(i+1)}-го ответа:";
+            string answerViewDescription = @$"Описание {Convert.ToString(i+1)}-го ответа:";
+
+            <input for=@answerIdHeader type="text" name=@answerNameHeader />
+            <label id=@answerIdHeader>@answerViewHeader</label>
+
+            <input for=@answerIdDescription type="text" name=@answerNameDescription />
+            <label id=@answerIdDescription>@answerViewDescription</label>
+        }
+    }
+    <div>
+        <h2>Режим голосования:</h2>
+        <label for="alone">Один ответ</label>
+        <input id="alone" type="radio" name="votetype" value="alone" checked />
+        <label for="some">Несколько ответов</label>
+        <input id="some" type="radio" name="votetype" value="some" />
+        <label for="prefer">Предпочтения по приоритету</label>
+        <input id="prefer" type="radio" name="votetype" value="prefer" />
+    </div>
+
+
+</form>
