@@ -9,6 +9,7 @@
         public const string AVoters = @"/Voters";
         public const string PVCancel = @"CANCEL";
         public const string PAnswerIndex = @"answer";
+        public const string ACreating = @"/Creating";
     }
     public static class ORoutes
     {

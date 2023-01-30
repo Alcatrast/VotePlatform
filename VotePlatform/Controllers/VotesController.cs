@@ -21,6 +21,12 @@ namespace VotePlatform.Controllers
     {
         public string path = @"C:\temp\bb.txt";
 
+        public ViewResult Create(string organizationId, string countAnswers)
+        {
+            int.TryParse(countAnswers, out var countAnswerNum);
+            if (countAnswerNum > 64) { countAnswerNum = 64; }
+            return View(new PreprocessorVoteSettings(organizationId,countAnswerNum));
+        }
         public ViewResult Voting(string id, string cancel)
         {
             ViewBag.Title = "АБОБАААА";
@@ -35,11 +41,9 @@ namespace VotePlatform.Controllers
                 {
                     VotesDataBaseAPI.Update(vote);
                 }
-
             }
             else
             {
-
                 try
                 {
                     bool isChoiceParsed = false;
