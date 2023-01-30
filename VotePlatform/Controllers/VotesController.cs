@@ -2,11 +2,13 @@
 using Microsoft.AspNetCore.WebUtilities;
 
 using Microsoft.Extensions.Configuration.UserSecrets;
+using Microsoft.Identity.Client;
 using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Threading.Tasks;
 using VotePlatform.Models.DataBaseAPI;
+using VotePlatform.Models.SystemServices;
 using VotePlatform.Models.Users;
 using VotePlatform.Models.Users.Responses;
 using VotePlatform.Models.Votes;
@@ -26,6 +28,17 @@ namespace VotePlatform.Controllers
             int.TryParse(countAnswers, out var countAnswerNum);
             if (countAnswerNum > 64) { countAnswerNum = 64; }
             return View(new PreprocessorVoteSettings(organizationId,countAnswerNum));
+        }
+        
+        [HttpPost]
+        public ViewResult Creating(string organizationId, string countAnswers) 
+        {
+            //group/user/check
+            ViewBag.Title = "АБОБАААА";
+            int.TryParse(countAnswers,out var countAnswersNum);
+            ConstructVote("u1", organizationId, countAnswersNum);
+            return View();
+
         }
         public ViewResult Voting(string id, string cancel)
         {
@@ -140,5 +153,93 @@ namespace VotePlatform.Controllers
             return true;    
         }
 
+        private bool ConstructVote(string adminId,string organizationId,int countAnswers)
+        {
+            var defvtype = new Dictionary<string, VoteType>
+            {
+                { "alone", VoteType.AloneAswer },
+                { "some", VoteType.SomeAnswers },
+                { "prefer", VoteType.PreferVote }
+            };
+
+            var defrole = new Dictionary<string, RoleInOrganization>
+            {
+                { "owner", RoleInOrganization.Owner },
+                { "admin", RoleInOrganization.Admin },
+                { "audience", RoleInOrganization.Audience },
+                { "passerby", RoleInOrganization.Passerby }
+            };
+
+            var form =Request.Form;
+            if(form == null) { return false; }
+            
+            //parse type
+            if (form.TryGetValue("votetype", out var vtype)==false) { return false; };
+            if (vtype.Count == 0) { return false; } if (vtype[0]==null) { return false; }
+            if (defvtype.TryGetValue(vtype[0],out VoteType type) == false) { return false; }
+            //parse attributes
+            //pare role to vote
+            if (form.TryGetValue("minroletovoting", out var vmrtv) == false) { return false; };
+            if (vmrtv.Count == 0) { return false; } if (vmrtv[0] == null) { return false; }
+            if (defrole.TryGetValue(vmrtv[0], out RoleInOrganization minRoleToVoting) == false) { return false; }
+            //parse data
+            TimeSpan timeActiveToVote = new TimeSpan(0);
+            bool isAlwaysActiveToVote = true;
+            bool isExtendPossible=false;
+            //...............................
+            bool isAnonimousVote = false;
+            if (form.TryGetValue("av", out _)) { isAnonimousVote = true; }
+            bool isVoiceCancellationPossible = false;
+            if (form.TryGetValue("prv", out _)) { isVoiceCancellationPossible = true; }
+
+            VoteAttributes voteAttributes=new VoteAttributes(timeActiveToVote,isExtendPossible,isAlwaysActiveToVote,isAnonimousVote,isVoiceCancellationPossible,minRoleToVoting);
+
+            //parse result attributes
+            //parse dateres
+            bool resultsOnlyAfterCompletion=false;
+            //parse role to actual
+            if (form.TryGetValue("minroletoactual", out var vmrta) == false) { return false; };
+            if (vmrta.Count == 0) { return false; }
+            if (vmrta[0] == null) { return false; }
+            if (defrole.TryGetValue(vmrta[0], out RoleInOrganization minRoleToActual) == false) { return false; }
+            //parse role to dynamic
+            if (form.TryGetValue("minroletodynamic", out var vmrtd) == false) { return false; };
+            if (vmrtd.Count == 0) { return false; }
+            if (vmrtd[0] == null) { return false; }
+            if (defrole.TryGetValue(vmrtd[0], out RoleInOrganization minRoleToDynamic) == false) { return false; }
+
+            VoteResultAttributes voteResultAttributes = new VoteResultAttributes(resultsOnlyAfterCompletion, minRoleToActual, minRoleToDynamic);
+
+            //parse meta
+            if(form.TryGetValue("mainheader", out var vheader) == false) { return false; }
+            if (vheader.Count == 0) { return false; }
+            if (vheader[0] == null) { return false; }
+            string header = vheader[0];
+
+            if (form.TryGetValue("maindescription", out var vdescription) == false) { return false; }
+            if (vdescription.Count == 0) { return false; }
+            if (vdescription[0] == null) { return false; }
+            string description = vdescription[0];
+
+            VoteMeta meta=new VoteMeta(header, description);
+
+            //parse answer meta
+            List<VoteMeta> answerMetas= new List<VoteMeta>();
+            for(int i = 0; i < countAnswers; i++)
+            {
+                if (form.TryGetValue(@$"answerheader_{Convert.ToString(i)}", out var vanswerHeader) == false) { return false; }
+                if (vanswerHeader.Count == 0) { return false; }
+                if (vanswerHeader[0] == null) { return false; }
+                string answerHeader = vanswerHeader[0];
+
+                if (form.TryGetValue(@$"answerdescription_{Convert.ToString(i)}", out var vanswerDescription) == false) { return false; }
+                if (vanswerDescription.Count == 0) { return false; }
+                if (vanswerDescription[0] == null) { return false; }
+                string answerDescription = vanswerDescription[0];
+
+                answerMetas.Add(new VoteMeta(answerHeader, answerDescription));
+            }
+            return VotesDataBaseAPI.Create(adminId,organizationId,type,voteAttributes,voteResultAttributes,meta,answerMetas);
+        }
     }
 }

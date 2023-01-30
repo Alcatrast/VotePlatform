@@ -1,83 +1,106 @@
 ﻿@model PreprocessorVoteSettings
 @{
     string actionStr = @$"{VRoutes.Controller}{VRoutes.ACreating}?organizationId={Model.OwnerOrganization}&countAnswers={Model.CountAnswers}";
-} 
+}
 <form action=@actionStr>
-    <input for="mh" type="text" name="mainheader" />
-    <label id="mh">Заголовок:</label>
-    <input type="text" for="md" name="maindescription"/>
-    <label id="md">Описание:</label>
-    @{
-        for(int i = 0; i < Model.CountAnswers; i++)
-        {
-            string answerIdHeader = @$"ah{Convert.ToString(i)}";
-            string answerIdDescription = @$"ad{Convert.ToString(i)}";
-            string answerNameHeader = @$"answerheader_{Convert.ToString(i)}";
-            string answerNameDescription = @$"answerdescription_{Convert.ToString(i)}";
-            string answerViewHeader = @$"Заголовок {Convert.ToString(i+1)}-го ответа:";
-            string answerViewDescription = @$"Описание {Convert.ToString(i+1)}-го ответа:";
+    <center>
+        <div style="width:70%" class="card-hz my-3">
+            <label style="color: rgb(230, 230, 255)">1-го ответа</label>
+            <label id="mh">Заголовок:</label>
+            <input style="width:15%" for="mh" type="text" name="mainheader" />
+            <label style="color: rgb(230, 230, 255)">1-го ответа</label>
+            <label id="md">Описание:</label>
+            <input style="width:50%;" type="text" for="md" name="maindescription" />
+        </div>
+        <div style="background-color: rgb(225, 225, 255); padding: 0.5em;border-radius: 1em;width:70%">
+            @{
+                for (int i = 0; i < Model.CountAnswers; i++)
+                {
+                    string answerIdHeader = @$"ah{Convert.ToString(i)}";
+                    string answerIdDescription = @$"ad{Convert.ToString(i)}";
+                    string answerNameHeader = @$"answerheader_{Convert.ToString(i)}";
+                    string answerNameDescription = @$"answerdescription_{Convert.ToString(i)}";
+                    string answerViewHeader = @$"Заголовок {Convert.ToString(i + 1)}-го ответа:";
+                    string answerViewDescription = @$"Описание {Convert.ToString(i + 1)}-го ответа:";
+                    <div class="card-hz2 my-2">
+                        <label id=@answerIdHeader>@answerViewHeader</label>
+                        <input style="width:15%" for=@answerIdHeader type="text" name=@answerNameHeader />
 
-            <input for=@answerIdHeader type="text" name=@answerNameHeader />
-            <label id=@answerIdHeader>@answerViewHeader</label>
+                        <label id=@answerIdDescription>   @answerViewDescription</label>
+                        <input style="width:50%" for=@answerIdDescription type="text" name=@answerNameDescription />
+                    </div>
+                }
+            }
+        </div>
 
-            <input for=@answerIdDescription type="text" name=@answerNameDescription />
-            <label id=@answerIdDescription>@answerViewDescription</label>
-        }
-    }
-    <div>
-        <h2>Режим голосования:</h2>
-        <label for="alone">Один ответ</label>
-                <input id="alone" type="radio" name="votetype" value="alone" checked />
-        <label for="some">Несколько ответов</label>
-                <input id="some" type="radio" name="votetype" value="some" />
-        <label for="prefer">Предпочтения по приоритету</label>
-                <input id="prefer" type="radio" name="votetype" value="prefer" />
-    </div>
-    
-    <div>
+        <div class="card-hz my-3" style="width:70%">
+            <h2>Режим голосования:</h2>
+            <input id="alone" type="radio" name="votetype" value="alone" checked />
+            <label for="alone">Один ответ   </label>
+            <h3></h3>
+            <input id="some" type="radio" name="votetype" value="some" />
+            <label for="some">Несколько ответов   </label>
+            <h3></h3>
+            <input id="prefer" type="radio" name="votetype" value="prefer" />
+            <label for="prefer">Предпочтения по приоритету</label>
 
-        <input type="datetime" id="activetime" name="activetime" />
-        <label for="activetime">Доступно до:</label>
+        </div>
 
-        <input type="checkbox" id="ep" name="ep" checked />
-        <label for="ep">Возможно продление</label>
-    
-        <input type="checkbox" id="iat" name="iat" checked/>
-        <label for="iat">Голосование бессрочно</label>
+        <div class="card-hz my-3" style="width:70%">
 
-        <input type="checkbox" id="rac" name="rac" checked />
-        <label for="rac">Результаты по окончании</label>
-    
-    </div>
+            <label for="activetime">Доступно до:</label>
+            <input style="width:15%" type="datetime" id="activetime" name="activetime" />
 
-        <input type="checkbox" id="av" name="av" checked />
-        <label for="av">Анонимное голосование</label>
+            <h3></h3>
+            <input type="checkbox" id="ep" name="ep" />
+            <label for="ep">Возможно продление</label>
 
-        <input type="checkbox" id="prv" name="prv" checked />
-        <label for="prv">Возможно переголосовать</label>
-    
+            <h3></h3>
+            <input type="checkbox" id="iat" name="iat" checked />
+            <label for="iat">Голосование бессрочно</label>
 
-    @{
-        List<RoleRadioBlock> blocks = new List<RoleRadioBlock>() 
+            <h3></h3>
+            <input type="checkbox" id="rac" name="rac" />
+            <label for="rac">Результаты по окончании</label>
+
+            <h3></h3>
+            <input type="checkbox" id="av" name="av" />
+            <label for="av">Анонимное голосование</label>
+
+            <h3></h3>
+            <input type="checkbox" id="prv" name="prv" checked />
+            <label for="prv">Возможно переголосовать</label>
+        </div>
+
+
+
+        @{
+            List<RoleRadioBlock> blocks = new List<RoleRadioBlock>()
         {new RoleRadioBlock("Голосовать может:","minroletovoting"), new RoleRadioBlock("Просматривать результаты может:","minroletoactual"),
         new RoleRadioBlock("Просматривать динамику может:","minroletodynamic") };
-    }
-    @{
-        foreach(var block in blocks){
-    <div>
-        <h2>@block.actionView</h2>
-        <label for="owner">Владелец</label>
-                <input id="owner" type="radio" name=@block.actionName value="owner" />
-        <label for="admin">Администратор</label>
-                <input id="admin" type="radio" name=@block.actionName value="admin" />
-        <label for="audience">Участник группы</label>
-                <input id="audience" type="radio" name=@block.actionName value="audience" />
-        <label for="passerby">Обыватель</label>
-                <input id="passerby" type="radio" name=@block.actionName value="passerby" checked />
-    </div>
         }
-    }
+        @{
+            foreach (var block in blocks)
+            {
+                <div class="card-hz my-3" style="width:70%">
+                    <h2>@block.actionView</h2>
+                    <input id=@($"{block.actionName}owner") type="radio" name=@block.actionName value="owner" />
+                    <label for=@($"{block.actionName}owner")>Владелец</label>
+                    <h3></h3>
+                    <input id=@($"{block.actionName}admin") type="radio" name=@block.actionName value="admin" />
+                    <label for=@($"{block.actionName}admin")>Администратор</label>
+                    <h3></h3>
+                    <input id=@($"{block.actionName}audience") type="radio" name=@block.actionName value="audience" />
+                    <label for=@($"{block.actionName}audience")>Участник группы</label>
+                    <h3></h3>
+                    <input id=@($"{block.actionName}passerby") type="radio" name=@block.actionName value="passerby" checked />
+                    <label for=@($"{block.actionName}passerby")>Обыватель</label>
+                </div>
+            }
+        }
 
-    <button type="submit">Создать голосование</button>
+        <input class="btn btn-primary" style="margin-left:-50%" type="submit" value="Создать голосование" input />
+        <h1 class="my-5"></h1>
 
+    </center>
 </form>
