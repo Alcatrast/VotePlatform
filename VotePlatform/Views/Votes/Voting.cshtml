@@ -75,13 +75,13 @@
                                     {
                                         if (Model.type == VoteType.AloneAswer)
                                         {
-                                            <h4 id=@idRes>@Model.answersMetas[i].Header</h4>
                                             <input style="float:left;margin:0 0%;" type="radio" id=@idRes name="vote" value=@idRes>
+                                            <h4 id=@idRes>@Model.answersMetas[i].Header</h4>
                                         }
                                         else if (Model.type == VoteType.SomeAnswers)
                                         {
-                                            <h4 id=@idRes>@Model.answersMetas[i].Header</h4>
                                             <input style="float:left;margin:0 0%;" type="checkbox" id=@idRes name=@idRes value=@idRes>
+                                            <h4 id=@idRes>@Model.answersMetas[i].Header</h4>
                                         }
                                         else if (Model.type == VoteType.PreferVote)
                                         {

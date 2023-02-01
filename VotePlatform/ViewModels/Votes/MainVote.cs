@@ -74,10 +74,10 @@ namespace VotePlatform.ViewModels.Votes
 
             isDynamicResultAccessible =response.IsDynamicResultAccessible;
             isCancellationPossible = response.IsCancellationAccessible;
-            urlToVoting= @$"{VRoutes.Controller}{VRoutes.AVoting}?id={response.Id.Id}";
-            urlToDynamic = @$"{VRoutes.Controller}{VRoutes.ADynamicView}?id={response.Id.Id}";
-            urlToVoters= @$"{VRoutes.Controller}{VRoutes.AVoters}?id={response.Id.Id}&=";
-            cancelUrl = $@"{VRoutes.Controller}{VRoutes.AVoting}?id={response.Id.Id}&cancel={VRoutes.PVCancel}";
+            urlToVoting= @$"{VRoutes.Controller}{VRoutes.AVoting}?id={response.Id.FullId}";
+            urlToDynamic = @$"{VRoutes.Controller}{VRoutes.ADynamicView}?id={response.Id.FullId}";
+            urlToVoters= @$"{VRoutes.Controller}{VRoutes.AVoters}?id={response.Id.FullId}&=";
+            cancelUrl = $@"{VRoutes.Controller}{VRoutes.AVoting}?id={response.Id.FullId}&cancel={VRoutes.PVCancel}";
         }
     }
 }

@@ -32,7 +32,7 @@ namespace VotePlatform
             {
                 endpoints.MapControllerRoute(
                     name: "default",
-                    pattern: "{controller=Votes}/{action=Create}/{countAnswers=5}");
+                    pattern: "{controller=Organizations}/{action=Main}/{id=o1}");
             });
             Zalupa.MainZalupa();
         }

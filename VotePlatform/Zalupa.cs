@@ -84,10 +84,10 @@ namespace VotePlatform
             VotesDataBaseAPI.Create("u4", "o1", VoteType.SomeAnswers,
               new VoteAttributes(new TimeSpan(), false, true, false, true, RoleInOrganization.Passerby),
               new VoteResultAttributes(false, RoleInOrganization.Passerby, RoleInOrganization.Passerby),
-              new VoteMeta(" Some Vote", "This vote exist for debug."),
+              new VoteMeta("Смирнов?", "Тест на Ксюшу?"),
               new List<VoteMeta>(){
-                new VoteMeta("Answer 1", "Answer 1 exist for debug."), new VoteMeta("Answer 2", "Answer 2 exist for debug."),
-                new VoteMeta("Answer 3", "Answer 3 exist for debug."), new VoteMeta("Answer 4","Answer 4 exist for debug.") }
+                new VoteMeta("Смирнов", "Это Смирнов."), new VoteMeta("Я Смирнов", "(нет)"),
+                new VoteMeta("Абоба", "Я."), new VoteMeta("Гатрик Фон","ФФФФФФФФФФФФФФФФФФФФФФФФФФВВВВВ") }
               );
             Console.WriteLine("Votes added");
 
@@ -104,7 +104,7 @@ namespace VotePlatform
 
         }
         //,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
-        public static string ConnectionString = CFG.S;
+        public static string ConnectionString = CFG.N;
         //,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
 
         public static void MainZalupa()

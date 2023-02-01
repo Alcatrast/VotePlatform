@@ -13,7 +13,9 @@
     }
     public static class ORoutes
     {
-       
+        public const string Host = @"https://localhost:44313";
+        public const string Controller = @"/Organizations";
+        public const string AMain = @"/Main";
     }
     public static class URoutes
     {

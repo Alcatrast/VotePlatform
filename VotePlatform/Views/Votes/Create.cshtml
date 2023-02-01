@@ -2,13 +2,13 @@
 @{
     string actionStr = @$"{VRoutes.Controller}{VRoutes.ACreating}?organizationId={Model.OwnerOrganization}&countAnswers={Model.CountAnswers}";
 }
-<form action=@actionStr>
+<form action=@actionStr method="post">
     <center>
         <div style="width:70%" class="card-hz my-3">
-            <label style="color: rgb(230, 230, 255)">1-го ответа</label>
+            <label style="color: rgb(225, 225, 255)">1-го ответа</label>
             <label id="mh">Заголовок:</label>
             <input style="width:15%" for="mh" type="text" name="mainheader" />
-            <label style="color: rgb(230, 230, 255)">1-го ответа</label>
+            <label style="color: rgb(225, 225, 255)">1-го ответа</label>
             <label id="md">Описание:</label>
             <input style="width:50%;" type="text" for="md" name="maindescription" />
         </div>

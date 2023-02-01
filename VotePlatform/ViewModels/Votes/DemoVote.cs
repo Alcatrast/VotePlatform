@@ -1,4 +1,6 @@
-﻿using VotePlatform.Models.Votes;
+﻿using VotePlatform.Models.DataBaseAPI;
+using VotePlatform.Models.Organizations;
+using VotePlatform.Models.Votes;
 using VotePlatform.ViewModels.Organizations;
 
 namespace VotePlatform.ViewModels.Votes
@@ -10,7 +12,7 @@ namespace VotePlatform.ViewModels.Votes
         public string title;
         public string description;
         public string urlToVote;
-        public DemoOrganization owner; 
+        public DemoOrganization ownerOrg; 
 
         public DemoVote(VoteDemoResponse response)
         {
@@ -18,7 +20,9 @@ namespace VotePlatform.ViewModels.Votes
             TimeCreated=response.CreatingDateTime.ToLongDateString();
             title = response.Meta.Header;
             description = response.Meta.Description;
-            urlToVote = string.Empty;
+            urlToVote = @$"{VRoutes.Controller}{VRoutes.AVoting}?id={response.Id.FullId}";
+            OrganizationsDataBaseAPI.FindById(response.Id.OwnerGroupId, out Organization organization);
+            ownerOrg=new DemoOrganization(new OrganizationDemoResponse(organization));
         }
     }
 }

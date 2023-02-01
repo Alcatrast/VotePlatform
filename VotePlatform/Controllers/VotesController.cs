@@ -1,19 +1,12 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.WebUtilities;
-
-using Microsoft.Extensions.Configuration.UserSecrets;
-using Microsoft.Identity.Client;
 using System;
 using System.Collections.Generic;
-using System.IO;
-using System.Threading.Tasks;
 using VotePlatform.Models.DataBaseAPI;
 using VotePlatform.Models.SystemServices;
 using VotePlatform.Models.Users;
 using VotePlatform.Models.Users.Responses;
 using VotePlatform.Models.Votes;
 using VotePlatform.Models.Votes.Responses;
-using VotePlatform.Models.Votes.Serializable;
 using VotePlatform.ViewModels.Users;
 using VotePlatform.ViewModels.Votes;
 
@@ -27,16 +20,18 @@ namespace VotePlatform.Controllers
         {
             int.TryParse(countAnswers, out var countAnswerNum);
             if (countAnswerNum > 64) { countAnswerNum = 64; }
-            return View(new PreprocessorVoteSettings(organizationId,countAnswerNum));
+            return View(new PreprocessorVoteSettings(organizationId, countAnswerNum));
         }
         
         [HttpPost]
         public ViewResult Creating(string organizationId, string countAnswers) 
         {
+            //organizationId = "o1";
             //group/user/check
+
             ViewBag.Title = "АБОБАААА";
             int.TryParse(countAnswers,out var countAnswersNum);
-            ConstructVote("u1", organizationId, countAnswersNum);
+            ConstructVote("u4", organizationId, countAnswersNum);
             return View();
 
         }
@@ -47,6 +42,7 @@ namespace VotePlatform.Controllers
             VoteId vId = new VoteId(id);
             VotesDataBaseAPI.FindById(vId, out Vote vote);
             var userId = "u1";
+            //////////////////////////////////////////////////
 
             if (cancel == VRoutes.PVCancel) 
             {

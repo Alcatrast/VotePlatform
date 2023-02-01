@@ -1,0 +1,31 @@
+﻿@model MainOrganization
+
+@{
+    if (Model.IsDeleted)
+    {
+        <h1>Организация приостановлена.</h1>
+    }
+}
+<h1>@Model.meta.Name</h1>
+<h2>@Model.meta.ShortDescription</h2>
+<h3>@Model.meta.Description</h3>
+@{
+    foreach(var vote in Model.votes)
+    {
+        <div>
+            <a href=@vote.ownerOrg.url>@($"{vote.ownerOrg.name}  {vote.ownerOrg.nick}")</a>
+            <div>
+                @{
+                    if (vote.IsAvailable == false)
+                    {
+                        <h2>Голосование удалено.</h2>
+                    }
+                }
+                <h4>@vote.TimeCreated</h4>
+                <h2>@vote.title</h2>
+                <h3>@vote.description</h3>
+            </div>
+            <a href=@vote.urlToVote>Перейти</a>
+        </div>
+    }
+}
