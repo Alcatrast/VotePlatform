@@ -7,9 +7,16 @@
         public const string AVoting = @"/Voting";
         public const string ADynamicView = @"/Dynamic";
         public const string AVoters = @"/Voters";
-        public const string PVCancel = @"CANCEL";
+
         public const string PAnswerIndex = @"answer";
+        public const string PVCancel = @"CANCEL";
+        
         public const string ACreating = @"/Creating";
+        public const string AChangePin = @"/ChangePin";
+
+        public const string PPinPrefState = @"pinPrefState";
+        public const string PVPin = @"pin";
+        public const string PVUnpin = @"unpin";
     }
     public static class ORoutes
     {

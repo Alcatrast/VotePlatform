@@ -35,6 +35,22 @@ namespace VotePlatform.Controllers
             return View();
 
         }
+
+        public ViewResult ChangePin(string id, string pinPrefState) 
+        {
+            ViewBag.Title = "АБОБАААА";
+
+            VoteId vId = new VoteId(id);
+            VotesDataBaseAPI.FindById(vId, out Vote vote);
+            var userId = "u1";
+            ////////////////////////////////////////////////////////////
+            bool bb = false;
+            if (pinPrefState == VRoutes.PVPin){ bb=vote.Pin(userId); }
+            else if(pinPrefState==VRoutes.PVUnpin) { bb = vote.Unpin(userId); }
+            if (bb) { VotesDataBaseAPI.Update(vote); }
+            return View("Voting", new MainVote(new VoteMainResponse(vote, userId)));
+        }
+
         public ViewResult Voting(string id, string cancel)
         {
             ViewBag.Title = "АБОБАААА";
@@ -46,7 +62,7 @@ namespace VotePlatform.Controllers
 
             if (cancel == VRoutes.PVCancel) 
             {
-                if(vote.Voiting(userId, new List<int>() { -1 }))
+                if(vote.Voting(userId, new List<int>() { -1 }))
                 {
                     VotesDataBaseAPI.Update(vote);
                 }
@@ -73,7 +89,7 @@ namespace VotePlatform.Controllers
 
                     if (isChoiceParsed)
                     {
-                        if (vote.Voiting(userId, choices))
+                        if (vote.Voting(userId, choices))
                         {
                             VotesDataBaseAPI.Update(vote);
                         }
@@ -235,7 +251,9 @@ namespace VotePlatform.Controllers
 
                 answerMetas.Add(new VoteMeta(answerHeader, answerDescription));
             }
-            return VotesDataBaseAPI.Create(adminId,organizationId,type,voteAttributes,voteResultAttributes,meta,answerMetas);
+            if ("-" == VotesDataBaseAPI.Create(adminId, organizationId, type, voteAttributes, voteResultAttributes, meta, answerMetas).Id) return true;
+            else return false;
+            
         }
     }
 }

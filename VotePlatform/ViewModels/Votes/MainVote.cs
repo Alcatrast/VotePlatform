@@ -9,17 +9,19 @@ namespace VotePlatform.ViewModels.Votes
     public class MainVote
     {
         public bool isAvailable;
+        public VoteId id;
         public VoteMeta meta;
         public VoteAttributes attributes;
         public string creatingDateTime;
         public VoteType type;
-        public string typeStr;
-        public string minRoleToVotingStr;
-        public string timeActiveToVoteStr;
-        public string isAnonimousVoteStr;
-        public string isVoiceCancellationPossibleStr;
-        public string isExtendPossibleStr;
-        public string resultsOnlyAfterCompletionStr;
+        public bool isRoot;
+        public string typeStr { get; }
+        public string minRoleToVotingStr { get; }
+        public string timeActiveToVoteStr { get; }
+        public string isAnonimousVoteStr { get; }
+        public string isVoiceCancellationPossibleStr { get; }
+        public string isExtendPossibleStr { get; }
+        public string resultsOnlyAfterCompletionStr { get; }
 
         public string AttributesStr { get { return $"{minRoleToVotingStr} {timeActiveToVoteStr} {isAnonimousVoteStr} {isVoiceCancellationPossibleStr} {isExtendPossibleStr} {resultsOnlyAfterCompletionStr}"; } }
 
@@ -36,17 +38,19 @@ namespace VotePlatform.ViewModels.Votes
         public string urlToDynamic;
 
         public bool isCancellationPossible;
-        public string cancelUrl;
-        public string urlToVoting;
-        public string urlToVoters;
+        public string cancelUrl { get; }
+        public string urlToVoting { get; }
+        public string urlToVoters { get; }
 
         public MainVote(VoteMainResponse response)
         {
+            id=response.Id;
             isAvailable = response.IsAvailable;
             attributes= response.Attributes;
             meta = response.Meta;
             creatingDateTime = response.CreatingDateTime.ToLongDateString();
             type= response.Type;
+            isRoot= response.IsRoot;
             if (response.Type == VoteType.AloneAswer) { typeStr = ""; }
             if (response.Type == VoteType.SomeAnswers) { typeStr = "несколько вариантов"; }
             if (response.Type == VoteType.PreferVote) { typeStr = "предпочтение"; }
@@ -74,10 +78,10 @@ namespace VotePlatform.ViewModels.Votes
 
             isDynamicResultAccessible =response.IsDynamicResultAccessible;
             isCancellationPossible = response.IsCancellationAccessible;
-            urlToVoting= @$"{VRoutes.Controller}{VRoutes.AVoting}?id={response.Id.FullId}";
-            urlToDynamic = @$"{VRoutes.Controller}{VRoutes.ADynamicView}?id={response.Id.FullId}";
-            urlToVoters= @$"{VRoutes.Controller}{VRoutes.AVoters}?id={response.Id.FullId}&=";
-            cancelUrl = $@"{VRoutes.Controller}{VRoutes.AVoting}?id={response.Id.FullId}&cancel={VRoutes.PVCancel}";
+            urlToVoting= @$"{VRoutes.Controller}{VRoutes.AVoting}?id={response.Id.Id}";
+            urlToDynamic = @$"{VRoutes.Controller}{VRoutes.ADynamicView}?id={response.Id.Id}";
+            urlToVoters= @$"{VRoutes.Controller}{VRoutes.AVoters}?id={response.Id.Id}&=";
+            cancelUrl = $@"{VRoutes.Controller}{VRoutes.AVoting}?id={response.Id.Id}&cancel={VRoutes.PVCancel}";
         }
     }
 }

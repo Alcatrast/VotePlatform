@@ -16,6 +16,7 @@
     //Model.isActualResultAccessible = true;
     //Model.isDynamicResultAccessible = true;
     //Model.isCancellationPossible = false;
+    Model.isRoot = true;
 }
 @*.............*@
 
@@ -23,15 +24,30 @@
 @{
     //Model.userVoice = new List<int>() { 0, 0, 1, 0 };
     //Model.simpleResults = new List<int>() { 5, 10, 100, 500 };
-    string tagCardisAvailable = "card-obsh";
+
 }
 @*.............*@
+@{
+    if (Model.isRoot)
+    {
+        if (Model.meta.IsPinned == false)
+        {
+            <a href=@($"{VRoutes.Controller}{VRoutes.AChangePin}?id={Model.id.Id}&{VRoutes.PPinPrefState}={VRoutes.PVPin}")>Закпепить</a>
+        }
+        else
+        {
+            <a href=@($"{VRoutes.Controller}{VRoutes.AChangePin}?id={Model.id.Id}&{VRoutes.PPinPrefState}={VRoutes.PVUnpin}")>Открепить</a>
+
+        }
+    }
+}
 
 <div class="container my-5">
     <div class="row row-cols-1 row-cols-md-1 row-cols-lg-1 g-1">
         <div class="col">
             @*шапка голосования *@
             @{
+                string tagCardisAvailable = "card-obsh";
                 if (Model.isAvailable == false)
                 {
                     tagCardisAvailable = "card-netu";

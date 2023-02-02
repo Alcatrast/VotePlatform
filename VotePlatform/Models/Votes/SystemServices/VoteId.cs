@@ -6,7 +6,7 @@ namespace VotePlatform.Models.Votes
     {
         public string OwnerGroupId { get; }
         public string IndexIn { get; }
-        public string FullId { get { return $"{OwnerGroupId}-{IndexIn}"; } }
+        public string Id { get { return $"{OwnerGroupId}-{IndexIn}"; } }
 
         public VoteId(string ownerGroupId, string index)
         {

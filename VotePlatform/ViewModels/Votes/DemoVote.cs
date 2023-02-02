@@ -20,7 +20,7 @@ namespace VotePlatform.ViewModels.Votes
             TimeCreated=response.CreatingDateTime.ToLongDateString();
             title = response.Meta.Header;
             description = response.Meta.Description;
-            urlToVote = @$"{VRoutes.Controller}{VRoutes.AVoting}?id={response.Id.FullId}";
+            urlToVote = @$"{VRoutes.Controller}{VRoutes.AVoting}?id={response.Id.Id}";
             OrganizationsDataBaseAPI.FindById(response.Id.OwnerGroupId, out Organization organization);
             ownerOrg=new DemoOrganization(new OrganizationDemoResponse(organization));
         }

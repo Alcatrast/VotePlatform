@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using VotePlatform.Models.SystemServices;
 
 namespace VotePlatform.Models.Votes
 {
@@ -24,6 +25,7 @@ namespace VotePlatform.Models.Votes
         public bool IsActualResultAccessible { get; }
         public bool IsDynamicResultAccessible { get; }
         public int CountVoters { get; }
+        public bool IsRoot { get; }
 
         public VoteMainResponse(Vote vote, string userId)
         {
@@ -42,6 +44,7 @@ namespace VotePlatform.Models.Votes
             IsCancellationAccessible=vote.IsCancellationPossible(userId);
             IsActualResultAccessible = GetIsActualResultAccessible(vote, userId);
             IsDynamicResultAccessible = GetIsDynamicResultAccessible(vote, userId);
+            IsRoot= vote.IsAccessAllowed(userId, RoleInOrganization.Admin);
         }
         private List<int> GetSimpleResults(Vote vote, string userId)
         {

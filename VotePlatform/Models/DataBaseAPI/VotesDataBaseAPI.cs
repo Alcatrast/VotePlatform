@@ -16,19 +16,19 @@ namespace VotePlatform.Models.DataBaseAPI
 
         public static void Initialize(string connectionString) => dataBase = new VoteDataBase(connectionString);
 
-        public static bool Create(string adminId, string organizationId, VoteType type, VoteAttributes attributes, VoteResultAttributes resultAttributes, VoteMeta meta, List<VoteMeta> answersMetas)
+        public static VoteId Create(string adminId, string organizationId, VoteType type, VoteAttributes attributes, VoteResultAttributes resultAttributes, VoteMeta meta, List<VoteMeta> answersMetas)
         {
             OrganizationsDataBaseAPI.FindById(organizationId, out Organization organization);
-            if (((sbyte)organization.GetRoleInOrganization(adminId) >= (sbyte)RoleInOrganization.Admin) == false) { return false; }
+            if (((sbyte)organization.GetRoleInOrganization(adminId) >= (sbyte)RoleInOrganization.Admin) == false) { new VoteId("-") ; }
             VoteId id = new VoteId(organization.Id, GetIndex(organization.VoteIds.Count));
             VoteInDB voteInDB = new VoteInDB(new Vote(id, type, attributes, resultAttributes, meta, answersMetas));
             if (dataBase.Add(voteInDB))
             {
                 organization.VoteIds.Add(id.IndexIn);
                 OrganizationsDataBaseAPI.Update(organization);
-                return true;
+                return id;
             }
-            else { return false; }
+            else { return new VoteId("-"); }
         }
         public static bool Update(Vote vote)
         {
