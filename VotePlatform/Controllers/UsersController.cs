@@ -70,7 +70,7 @@ namespace VotePlatform.Controllers
                 if (Request.Form.TryGetValue("nick", out var nicks) && Request.Form.TryGetValue("pass", out var passs))
                 {
                     if (nicks.Count > 0 && passs.Count > 0)
-                    {
+                    { 
                         if (nicks[0] != null && passs[0] != null)
                         {
                             if (UsersDataBaseAPI.FindByNick($"@{nicks[0]}",out User user))
