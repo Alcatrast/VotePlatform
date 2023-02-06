@@ -9,6 +9,8 @@ using VotePlatform.Models.Votes.Responses;
 using VotePlatform.Models.Votes;
 using VotePlatform.ViewModels.Users;
 using VotePlatform.ViewModels.Votes;
+using System.Collections.Generic;
+using System;
 
 namespace VotePlatform.Controllers
 {

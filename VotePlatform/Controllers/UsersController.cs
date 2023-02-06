@@ -73,7 +73,7 @@ namespace VotePlatform.Controllers
                     {
                         if (nicks[0] != null && passs[0] != null)
                         {
-                            if (UsersDataBaseAPI.FindByNick(nicks[0],out User user))
+                            if (UsersDataBaseAPI.FindByNick($"@{nicks[0]}",out User user))
                             {
                                 if (user.IsPasswordRight(passs[0]))
                                 {

@@ -1,4 +1,5 @@
-﻿using VotePlatform.Models.DataBaseAPI;
+﻿using System.Collections.Generic;
+using VotePlatform.Models.DataBaseAPI;
 using VotePlatform.Models.Users;
 using VotePlatform.Models.Users.Responses;
 using VotePlatform.ViewModels.Users;
