@@ -120,8 +120,9 @@ namespace VotePlatform
             Console.WriteLine("Hello, World!");
             
             InitializateDB();
-            StartFilling();
-            SAV();
+
+            //StartFilling();
+            //SAV();
 
             Console.WriteLine("Startup completed");
 
