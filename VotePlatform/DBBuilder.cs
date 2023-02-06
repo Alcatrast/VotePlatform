@@ -13,13 +13,12 @@ using VotePlatform.Models.Votes.DB;
 using VotePlatform.Models.Organizations.DB;
 using VotePlatform.Models.Users.DB;
 using VotePlatform.Models.DataBaseAPI;
-using VotePlatform.Models.DataBaseAPI.SystemServices;
 using Microsoft.Data.SqlClient;
 using VotePlatform.Models.SystemServices.Serializable;
 
 namespace VotePlatform
 {
-    internal static class Zalupa
+    internal static class DBBuilder
     {
         private static void StartFilling()
         {
@@ -62,6 +61,15 @@ namespace VotePlatform
             OrganizationsDataBaseAPI.Update(organization);
             Console.WriteLine("Organizations added.");
 
+            //////////////// раздача ролей на спавне u4 - хозяин, остальные говноеды
+
+            OrganizationsDataBaseAPI.FindByNick("#organization", out Organization org);
+            org.ChangeType(OrganizationTypeOfJoin.Controlled, "u4");
+            org.ApplicationForMembership("u2");
+            org.AcceptPerson("u4", "u2");
+            org.ApplicationForMembership("u3");
+            org.AddAdmin("u4", "u1");
+            OrganizationsDataBaseAPI.Update(org);
         }
         public static void InitializateDB()
         {
@@ -107,13 +115,13 @@ namespace VotePlatform
         public static string ConnectionString = CFG.D;
         //,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
 
-        public static void MainZalupa()
+        public static void Build()
         {
             Console.WriteLine("Hello, World!");
             
             InitializateDB();
-            StartFilling();
-            SAV();
+            //StartFilling();
+            //SAV();
 
             Console.WriteLine("Startup completed");
 

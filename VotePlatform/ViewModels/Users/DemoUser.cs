@@ -13,7 +13,7 @@ namespace VotePlatform.ViewModels.Users
         {
             name=response.Name;
             nick = response.Nickname;
-            url = string.Empty;
+            url = $@"{URoutes.Controller}{URoutes.AMain}?id={response.Id}" ;
         }
     }
 }

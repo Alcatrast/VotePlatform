@@ -12,7 +12,7 @@ namespace VotePlatform.ViewModels.Organizations
         {
             name = response.Meta.Name;
             nick = response.Nick;
-            url = string.Empty;
+            url = $@"{ORoutes.Controller}{ORoutes.AMain}?id={response.Id}";
         }
     }
 }

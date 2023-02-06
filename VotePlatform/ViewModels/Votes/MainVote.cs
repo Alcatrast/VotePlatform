@@ -2,12 +2,17 @@
 
 using VotePlatform.Models.Votes;
 using VotePlatform.Models.SystemServices;
+using VotePlatform.ViewModels.Organizations;
+using VotePlatform.Models.DataBaseAPI;
+using VotePlatform.Models.Organizations;
 
 namespace VotePlatform.ViewModels.Votes
 {
 
     public class MainVote
     {
+        public DemoOrganization ownerOrg;
+
         public bool isAvailable;
         public VoteId id;
         public VoteMeta meta;
@@ -15,13 +20,13 @@ namespace VotePlatform.ViewModels.Votes
         public string creatingDateTime;
         public VoteType type;
         public bool isRoot;
-        public string typeStr { get; }
-        public string minRoleToVotingStr { get; }
-        public string timeActiveToVoteStr { get; }
-        public string isAnonimousVoteStr { get; }
-        public string isVoiceCancellationPossibleStr { get; }
-        public string isExtendPossibleStr { get; }
-        public string resultsOnlyAfterCompletionStr { get; }
+        public string typeStr;
+        public string minRoleToVotingStr;
+        public string timeActiveToVoteStr;
+        public string isAnonimousVoteStr;
+        public string isVoiceCancellationPossibleStr;
+        public string isExtendPossibleStr;
+        public string resultsOnlyAfterCompletionStr;
 
         public string AttributesStr { get { return $"{minRoleToVotingStr} {timeActiveToVoteStr} {isAnonimousVoteStr} {isVoiceCancellationPossibleStr} {isExtendPossibleStr} {resultsOnlyAfterCompletionStr}"; } }
 
@@ -38,13 +43,16 @@ namespace VotePlatform.ViewModels.Votes
         public string urlToDynamic;
 
         public bool isCancellationPossible;
-        public string cancelUrl { get; }
-        public string urlToVoting { get; }
-        public string urlToVoters { get; }
+        public string cancelUrl;
+        public string urlToVoting;
+        public string urlToVoters;
 
         public MainVote(VoteMainResponse response)
         {
-            id=response.Id;
+            OrganizationsDataBaseAPI.FindById(response.Id.OwnerGroupId, out Organization organization);
+            ownerOrg = new DemoOrganization(new OrganizationDemoResponse(organization));
+
+            id =response.Id;
             isAvailable = response.IsAvailable;
             attributes= response.Attributes;
             meta = response.Meta;

@@ -1,0 +1,34 @@
+﻿@model PeopleInOrganization
+
+<h1>@Model.typeOfMembers</h1>
+
+@{
+    foreach(var user in Model.members)
+    {
+        <a href=@user.url>
+            @($"{user.name} {user.nick}")
+        </a>
+
+        if (Model.isAcceptPersonPossible)
+        {
+        <a href="">Добавть</a>    
+        }
+        if (Model.isExcludePersonPossible)
+        {
+            <a href="">Исключить</a>
+        }
+        if (Model.isRejectApplicationOfPersonPossible)
+        {
+            <a href="">Отклонить</a>    
+        }
+        if (Model.isIncludeAdminPossible)
+        {
+            <a href="">Дать права администратора</a>    
+        }
+        if (Model.isExcludeAdminPossible)
+        {
+            <a href="">Лишить прав администратора</a>    
+        }
+
+    }
+}

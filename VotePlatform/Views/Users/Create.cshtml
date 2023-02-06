@@ -1,0 +1,17 @@
+﻿<a href=@($"{URoutes.Controller}{URoutes.ASingIn}")>Вход</a>
+<h1>Регистрация</h1>
+<form action=@($"{URoutes.Controller}{URoutes.ACreating}") method="post">
+
+    <ladel for="nick">Ник:</ladel>
+    <input type ="text" id="nick" name="nick"/>
+
+    <ladel for="name">Имя:</ladel>
+    <input type="text" id="name" name="name" />
+
+    <ladel for="email">Email:</ladel>
+    <input type="text" id="email" name="email" />
+
+    <ladel for="pass">Придумайте пароль:</ladel>
+    <input type="text" id="pass" name="pass" />
+    <input type="submit" value="Зарегистрироваться"/>
+</form>

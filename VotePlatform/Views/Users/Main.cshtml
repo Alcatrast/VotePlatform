@@ -1,0 +1,44 @@
+﻿@model MainUser
+
+<h3>@Model.role</h3>
+<h3>@Model.nickname</h3>
+@{
+    if (Model.isMe)
+    {
+        <h3>@Model.email</h3>
+    }
+}
+<h2>@Model.meta.Name</h2>
+<h3>@Model.meta.Description</h3>
+
+@{
+    if (Model.isMe)
+    {
+        <a href=@($"{ORoutes.Controller}{ORoutes.ACreate}")>Новая организация</a>
+    }
+}
+
+@{
+    <h3>Владеет:</h3>
+    foreach(var org in Model.ownedOrg)
+    {
+        <a href=@org.url>@($"{org.name}  {org.nick}")</a>
+    }
+    if (Model.isMe)
+    {
+        <h3>Руководит:</h3>
+        foreach (var org in Model.adminedOrg)
+        {
+            <a href=@org.url>@(
+           $"{org.name}  {org.nick}"
+           )</a>
+        }
+
+    }
+    <h3>Состоит в:</h3>
+
+    foreach (var org in Model.audiencedOrg)
+    {
+        <a href=@org.url>@($"{org.name}  {org.nick}")</a>
+    }
+}

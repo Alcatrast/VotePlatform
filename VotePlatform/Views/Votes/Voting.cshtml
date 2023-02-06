@@ -45,6 +45,7 @@
 <div class="container my-5">
     <div class="row row-cols-1 row-cols-md-1 row-cols-lg-1 g-1">
         <div class="col">
+            <a href=@Model.ownerOrg.url>@($"{Model.ownerOrg.name} {Model.ownerOrg.nick}")</a>
             @*шапка голосования *@
             @{
                 string tagCardisAvailable = "card-obsh";

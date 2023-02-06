@@ -5,10 +5,48 @@
     {
         <h1>Организация приостановлена.</h1>
     }
+    if (Model.attributes.IsValidationPassed)
+    {
+        <h1>Официальная организация</h1>
+    }
 }
 <h1>@Model.meta.Name</h1>
 <h2>@Model.meta.ShortDescription</h2>
 <h3>@Model.meta.Description</h3>
+
+@{
+    switch (Model.inGroupRole)
+    {
+        case RoleInOrganization.Owner:
+            <a href=@Model.urlToAdmins>@($"Администраторы") </a>
+            <a href=@Model.urlToAudience>@($"Участники") </a>
+            <a href=@Model.urlToQueue>@($"Очередь") </a>
+            break;
+        case RoleInOrganization.Admin:
+            <a href=@Model.urlToAudience>@($"Участники: {Model.countMembers}") </a>
+            <a href=@Model.urlToQueue>@($"Очередь") </a>
+            break;
+        case RoleInOrganization.Audience:
+            <a href=@Model.urlToAudience>@($"Участники: {Model.countMembers}") </a>
+        break;
+        default:
+            <a>@($"Участники: {Model.countMembers}") </a>
+            break;
+    }
+}
+
+@{
+    if (Model.inGroupRole >= RoleInOrganization.Admin)
+    {
+        <form action=@(@$"{VRoutes.Controller}{VRoutes.ACreate}?organizationId={Model.Id}") method="post">
+            <input id="countAnswers" type="number" name="countAnswers" value="2" />
+            <label for="countAnswers">Количество ответов:</label>
+            <input type="submit" value="Создать голосование"/>
+        </form>
+    }
+}
+
+
 @{
     foreach(var vote in Model.votes)
     {

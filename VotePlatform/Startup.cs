@@ -31,11 +31,19 @@ namespace VotePlatform
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllerRoute(
-                    name: "default",
-                   pattern: "{controller=Votes}/{action=Voting}/{id=o1-v1}");
+                   name: "default",
+                  pattern: "{controller=Users}/{action=SingIn}");
 
+                //endpoints.MapControllerRoute(
+                //  name: "default",
+                // pattern: "{controller=Users}/{action}");
+
+                endpoints.MapControllerRoute(
+
+                    name: "default",
+                   pattern: "{controller}/{action}/{id?}");
             });
-            Zalupa.MainZalupa();
+            DBBuilder.Build();
         }
     }
 }

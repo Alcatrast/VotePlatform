@@ -11,12 +11,14 @@ namespace VotePlatform.Models.Users.Responses
         public Meta Meta { get; }
         public RoleInPlatform Role { get; }
         public MembersipImGroups Membersip { get; }
+        public bool IsMe { get; }
 
         public UserMainResponse(User user, string userId)
         {
             Id = user.Id;
             Nickname = user.Nickname;
-            if (user.Id == userId) { Email=user.Email; }
+            IsMe = false;
+            if (user.Id == userId) { Email=user.Email;IsMe = true; }
             else
             { UsersDataBaseAPI.FindById(userId, out User valid);
                 if ((sbyte)valid.Role >= (sbyte)RoleInPlatform.Validator) { Email = user.Email; } else { Email = string.Empty; }

@@ -10,6 +10,7 @@ namespace VotePlatform.ViewModels.Users
 {
     public class MainUser
     {
+        public bool isMe;
         public string nickname;
         public string email;
         public Meta meta;
@@ -20,6 +21,7 @@ namespace VotePlatform.ViewModels.Users
 
         public MainUser(UserMainResponse response) 
         {
+            isMe = response.IsMe;
             nickname=response.Nickname;
             email=response.Email;
             meta=response.Meta;
@@ -28,7 +30,7 @@ namespace VotePlatform.ViewModels.Users
             {
                 RoleInPlatform.User => "Пользователь",
                 RoleInPlatform.Validator => "Валидатор",
-                RoleInPlatform.Admin => "Админ",
+                RoleInPlatform.Admin => "Администратор",
                 RoleInPlatform.Owner => "Владелец",
                 RoleInPlatform.Passerby => "Заблокирован",
                 _ => "Заблокирован",
