@@ -80,7 +80,7 @@ namespace VotePlatform.ViewModels.Votes
             isCancellationPossible = response.IsCancellationAccessible;
             urlToVoting= @$"{VRoutes.Controller}{VRoutes.AVoting}?id={response.Id.Id}";
             urlToDynamic = @$"{VRoutes.Controller}{VRoutes.ADynamicView}?id={response.Id.Id}";
-            urlToVoters= @$"{VRoutes.Controller}{VRoutes.AVoters}?id={response.Id.Id}&=";
+            urlToVoters= @$"{VRoutes.Controller}{VRoutes.AVoters}?id={response.Id.Id}&{VRoutes.PAnswerIndex}=";
             cancelUrl = $@"{VRoutes.Controller}{VRoutes.AVoting}?id={response.Id.Id}&cancel={VRoutes.PVCancel}";
         }
     }
