@@ -3,7 +3,7 @@
 <h1>@Model.typeOfMembers</h1>
 
 @{
-    foreach(var user in Model.members)
+    foreach (var user in Model.members)
     {
         <a href=@user.url>
             @($"{user.name} {user.nick}")
@@ -11,23 +11,23 @@
 
         if (Model.isAcceptPersonPossible)
         {
-        <a href="">Добавть</a>    
+            <a class="btn-YES" href="">Добавть</a>
         }
         if (Model.isExcludePersonPossible)
         {
-            <a href="">Исключить</a>
+            <a class="btn-NO" href="">Исключить</a>
         }
         if (Model.isRejectApplicationOfPersonPossible)
         {
-            <a href="">Отклонить</a>    
+            <a class="btn-NO" href="">Отклонить</a>
         }
         if (Model.isIncludeAdminPossible)
         {
-            <a href="">Дать права администратора</a>    
+            <a class="btn-primary" href="">Дать права администратора</a>
         }
         if (Model.isExcludeAdminPossible)
         {
-            <a href="">Лишить прав администратора</a>    
+            <a class="btn-NO" href="">Лишить прав администратора</a>
         }
 
     }

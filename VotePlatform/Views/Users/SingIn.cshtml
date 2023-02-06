@@ -1,11 +1,19 @@
-﻿<h1>Вход</h1>
-<a href=@($"{URoutes.Controller}{URoutes.ACreate}")>Регистация</a>
-
-    <form action=@($"{URoutes.Controller}{URoutes.ASingingIn}") method="post">
-
-        <ladel for="nick">Ник:</ladel>
-        <input type="text" id="nick" name="nick" />
-        <ladel for="pass">Придумайте пароль:</ladel>
+﻿<center>
+<div class="card-obsh my-5" style="width:30%">
+    <h1>Вход</h1>
+            <form action=@($"{URoutes.Controller}{URoutes.ASingingIn}") method="post">
+            <div class="my-3">
+                <label style="color: rgb(225, 225, 255)">аро</label>
+                    <ladel for="nick">Ник:</ladel>
+                    <input type="text" id="nick" name="nick" />
+                </div>
+            <div class="my-3">
+        <ladel for="pass">Пароль:</ladel>
         <input type="text" id="pass" name="pass" />
-        <input type="submit" value="Войти" />
+                </div>
+        <input style="width:100%" class="btn btn-primary my-3" type="submit" value="Войти" />
     </form>
+
+    <a style="color:gray;" href=@($"{URoutes.Controller}{URoutes.ACreate}")>Регистация</a>
+</div>
+</center>

@@ -1,69 +1,72 @@
 ﻿@model MainOrganization
+<div class="card-obsh center">
 
-@{
-    if (Model.IsDeleted)
-    {
-        <h1>Организация приостановлена.</h1>
+    @{
+        if (Model.IsDeleted)
+        {
+            <h1>Организация приостановлена.</h1>
+        }
+        if (Model.attributes.IsValidationPassed)
+        {
+            <h1>Официальная организация</h1>
+        }
     }
-    if (Model.attributes.IsValidationPassed)
-    {
-        <h1>Официальная организация</h1>
-    }
-}
-<h1>@Model.meta.Name</h1>
-<h2>@Model.meta.ShortDescription</h2>
-<h3>@Model.meta.Description</h3>
+    <h1>@Model.meta.Name</h1>
+    <h2>@Model.meta.ShortDescription</h2>
+    <h3>@Model.meta.Description</h3>
 
-@{
-    switch (Model.inGroupRole)
-    {
-        case RoleInOrganization.Owner:
-            <a href=@Model.urlToAdmins>@($"Администраторы") </a>
-            <a href=@Model.urlToAudience>@($"Участники") </a>
-            <a href=@Model.urlToQueue>@($"Очередь") </a>
-            break;
-        case RoleInOrganization.Admin:
-            <a href=@Model.urlToAudience>@($"Участники: {Model.countMembers}") </a>
-            <a href=@Model.urlToQueue>@($"Очередь") </a>
-            break;
-        case RoleInOrganization.Audience:
-            <a href=@Model.urlToAudience>@($"Участники: {Model.countMembers}") </a>
-        break;
-        default:
-            <a>@($"Участники: {Model.countMembers}") </a>
-            break;
+    @{
+        switch (Model.inGroupRole)
+        {
+            case RoleInOrganization.Owner:
+                <a class="btn btn-primary" href=@Model.urlToAdmins>@($"Администраторы") </a>
+                <a class="btn btn-primary" href=@Model.urlToAudience>@($"Участники") </a>
+                <a class="btn btn-primary" href=@Model.urlToQueue>@($"Очередь") </a>
+                break;
+            case RoleInOrganization.Admin:
+                <a class="btn btn-primary" href=@Model.urlToAudience>@($"Участники: {Model.countMembers}") </a>
+                <a class="btn btn-primary" href=@Model.urlToQueue>@($"Очередь") </a>
+                break;
+            case RoleInOrganization.Audience:
+                <a class="btn btn-primary" href=@Model.urlToAudience>@($"Участники: {Model.countMembers}") </a>
+                break;
+            default:
+                <a>@($"Участники: {Model.countMembers}") </a>
+                break;
+        }
     }
-}
-
-@{
+    <div class="my-5">
+    @{
     if (Model.inGroupRole >= RoleInOrganization.Admin)
     {
-        <form action=@(@$"{VRoutes.Controller}{VRoutes.ACreate}?organizationId={Model.Id}") method="post">
-            <input id="countAnswers" type="number" name="countAnswers" value="2" />
-            <label for="countAnswers">Количество ответов:</label>
-            <input type="submit" value="Создать голосование"/>
+                <form action=@(@$"{VRoutes.Controller}{VRoutes.ACreate}?organizationId={Model.Id}") method="post">
+                    <label for="countAnswers">Количество ответов:</label>
+            <input style="width:4%" id="countAnswers" type="number" name="countAnswers" value="2" />
+                    <input class="btn btn-primary" type="submit" value="Создать голосование" />
         </form>
     }
 }
-
-
-@{
-    foreach(var vote in Model.votes)
-    {
-        <div>
-            <a href=@vote.ownerOrg.url>@($"{vote.ownerOrg.name}  {vote.ownerOrg.nick}")</a>
-            <div>
-                @{
-                    if (vote.IsAvailable == false)
-                    {
-                        <h2>Голосование удалено.</h2>
-                    }
-                }
-                <h4>@vote.TimeCreated</h4>
-                <h2>@vote.title</h2>
-                <h3>@vote.description</h3>
+    </div>
+    @{
+        foreach (var vote in Model.votes)
+        {
+            <div class="card my-3" style="width:50%;margin-left:25%;text-align: left;">
+                <div>
+                    <a style="color:gray;width:50%;" href=@vote.ownerOrg.url>@($"{vote.ownerOrg.name}  {vote.ownerOrg.nick}")</a>
+                    <div>
+                        @{
+                            if (vote.IsAvailable == false)
+                            {
+                                <h2>Голосование удалено.</h2>
+                            }
+                        }
+                        <h6>@vote.TimeCreated</h6>
+                        <h2>@vote.title</h2>
+                        <h3>@vote.description</h3>
+                    </div>
+                    <a class="btn btn-primary" href=@vote.urlToVote>Перейти</a>
+                </div>
             </div>
-            <a href=@vote.urlToVote>Перейти</a>
-        </div>
+        }
     }
-}
+</div>

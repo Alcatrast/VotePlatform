@@ -1,4 +1,4 @@
-﻿<a href=@($"{URoutes.Controller}{URoutes.ASingIn}")>Вход</a>
+﻿@*<a href=@($"{URoutes.Controller}{URoutes.ASingIn}")>Вход</a>
 <h1>Регистрация</h1>
 <form action=@($"{URoutes.Controller}{URoutes.ACreating}") method="post">
 
@@ -14,4 +14,33 @@
     <ladel for="pass">Придумайте пароль:</ladel>
     <input type="text" id="pass" name="pass" />
     <input type="submit" value="Зарегистрироваться"/>
-</form>
+</form>*@
+<center>
+<div class="card-obsh my-5" style="width:30%">
+        <h1>Регистрация</h1>
+        <form action=@($"{URoutes.Controller}{URoutes.ACreating}") method="post">
+            <div class="my-3">
+                <label style="color: rgb(225, 225, 255)">Придумайтеп</label>
+                <ladel for="nick">Ник:</ladel>
+                <input type="text" id="nick" name="nick" />
+            </div>
+            <div class="my-3">
+                <label style="color: rgb(225, 225, 255)">Придумайтеп</label>
+                <ladel for="name">Имя:</ladel>
+                <input type="text" id="name" name="name" />
+            </div>
+            <div class="my-3">
+                <label style="color: rgb(225, 225, 255)">Придумайтеп</label>
+                <ladel for="email">Email:</ladel>
+                <input type="text" id="email" name="email" />
+                    </div>
+            <div class="my-3">
+                <ladel for="pass">Придумайте пароль:</ladel>
+                <input type="text" id="pass" name="pass" />
+                </div>
+            <input style="width:100%" class="btn btn-primary my-3" type="submit" value="Зарегистрироваться" />
+    </form>
+
+        <a style="color:gray;" href=@($"{URoutes.Controller}{URoutes.ASingIn}")>Вход</a>
+</div>
+</center>
